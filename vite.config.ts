@@ -9,7 +9,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
     root,
-    base: command === 'serve' ? '/' : './',
+    base: command === 'serve' ? '/' : '/vite-admin-ts/',
     plugins: [
       vue(),
       vueJsx(),
