@@ -1,0 +1,5 @@
+<template>
+  <div class="role-warp">用户管理</div>
+</template>
+<script setup lang="ts"></script>
+<style lang="scss" scoped></style>

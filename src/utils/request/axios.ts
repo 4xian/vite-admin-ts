@@ -1,0 +1,144 @@
+import type { AxiosResponse, AxiosRequestConfig, AxiosInstance, AxiosError } from 'axios'
+import { getCookie, removeCookie } from '../cookies'
+import { Result, AxiosRequestOptions, ReqOptions, RequestTypeEnum } from '#/request'
+
+import { cloneDeep } from 'lodash-es'
+import { isString } from '../is'
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
+
+export class Request {
+  private reqInstance: AxiosInstance
+  private readonly opts: AxiosRequestOptions
+
+  constructor(opts: AxiosRequestOptions) {
+    this.opts = opts
+    this.reqInstance = axios.create(opts)
+    this.initInterceptors()
+  }
+
+  /**
+      @description:拦截器配置
+    */
+  private initInterceptors() {
+    // request
+    this.reqInstance.interceptors.request.use(
+      (config: AxiosRequestConfig) => {
+        const token = getCookie('token')
+        if (token && config.headers) {
+          config.headers['Authorization'] = `Bearer ${token}`
+        }
+        return config
+      },
+      (err: AxiosError) => Promise.reject(err)
+    )
+
+    // response
+    this.reqInstance.interceptors.response.use(
+      (res: AxiosResponse) => {
+        return res.data
+      },
+      (err: AxiosError) => {
+        ElMessage({
+          type: 'error',
+          message: err.message
+        })
+        return Promise.reject(err)
+      }
+    )
+  }
+
+  /**
+    @description: restful api
+    */
+
+  get<T = any>(config: AxiosRequestConfig, options?: ReqOptions): Promise<T> {
+    return this.request(
+      {
+        ...config,
+        method: 'GET'
+      },
+      options
+    )
+  }
+  post<T = any>(config: AxiosRequestConfig, options?: ReqOptions): Promise<T> {
+    return this.request(
+      {
+        ...config,
+        method: 'POST'
+      },
+      options
+    )
+  }
+  put<T = any>(config: AxiosRequestConfig, options?: ReqOptions): Promise<T> {
+    return this.request(
+      {
+        ...config,
+        method: 'PUT'
+      },
+      options
+    )
+  }
+  delete<T = any>(config: AxiosRequestConfig, options: ReqOptions): Promise<T> {
+    return this.request(
+      {
+        ...config,
+        method: 'DELETE'
+      },
+      options
+    )
+  }
+
+  private handleConfig(config: AxiosRequestConfig, options: ReqOptions): AxiosRequestConfig {
+    const { prefix } = options
+
+    if (prefix) {
+      config.url = `${prefix}${config.url}`
+    }
+    const params = config.params || {}
+    const data = config.data || {}
+    if (config.method?.toLowerCase() === RequestTypeEnum.GET) {
+      if (isString(params)) {
+        config['url'] = config.url + params
+        config.params = undefined
+      }
+      //   else {
+      // config["url"] = config.url + objToParams(config.params);
+      // console.log(config["url"]);
+      //   }
+    } else {
+      // 非GET
+      if (isString(params)) {
+        config.url = config.url + params
+        config.params = undefined
+      } else {
+        if (Reflect.has(config, 'data') && Object.keys(config.data).length > 0) {
+          config.data = data
+          config.params = params
+        } else {
+          config.data = params
+          config.params = undefined
+        }
+      }
+    }
+    return config
+  }
+
+  request<T = any>(config: AxiosRequestConfig, options?: ReqOptions): Promise<T> {
+    let tempConfig: AxiosRequestOptions = cloneDeep(config)
+    const { initOptions } = this.opts
+    const opts = { ...initOptions, ...options }
+    tempConfig = this.handleConfig(tempConfig, opts)
+
+    return new Promise((resolve, reject) => {
+      this.reqInstance
+        .request<any, AxiosResponse<Result>>(tempConfig)
+        .then((res: AxiosResponse<Result>) => {
+          resolve((res as unknown) as Promise<T>)
+        })
+        .catch((e: Error | AxiosError) => {
+          reject(e)
+        })
+    })
+  }
+}
