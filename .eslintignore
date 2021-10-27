@@ -10,7 +10,7 @@ dist
 /public
 /tests/unit
 /__tests__
-/docs
+docs
 .husky
 .local
 /bin

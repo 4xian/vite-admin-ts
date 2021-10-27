@@ -1,0 +1,1 @@
+import{_ as e}from"./index.2988f909.js";import{p as s,q as t,x as _,y as o}from"./vue.a14bd6b6.js";import"./element-plus.b853e53f.js";const n={class:"index"},a=s({setup(r){return t(()=>{}),(d,p)=>(_(),o("div",n,"\u9996\u9875"))}});var f=e(a,[["__scopeId","data-v-6f352c4d"]]);export{f as default};
