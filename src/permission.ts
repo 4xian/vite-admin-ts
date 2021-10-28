@@ -1,7 +1,8 @@
 import { configure, start, done } from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from './router'
-import { whiteRoute, constantRoute } from '@/router/menu'
+import { constantRoute } from '@/router/modules/index'
+import { whiteRoute } from '@/router/modules/white'
 import { getCookie } from '@/utils/cookies'
 import type { RouteLocationNormalized } from 'vue-router'
 import { flatTree } from '@/utils/util'
@@ -20,25 +21,27 @@ router.beforeEach(async (to: RouteLocationNormalized, _from: RouteLocationNormal
       next('/')
       done()
     } else {
-      let temp: any = []
-      constantRoute.forEach((v) => {
-        if (v.children && v.children.length) {
-          temp = [...temp, ...flatTree(v)]
+      if (to.path === '/404') next()
+      else {
+        let temp: any = []
+        constantRoute.forEach((v) => {
+          if (v.children && v.children.length) {
+            temp = [...temp, ...flatTree(v)]
+          } else {
+            temp = [...temp, v]
+          }
+        })
+        const obj = temp.find((v: { path: string }) => to.path === v.path)
+        if (obj && (!obj.auth || handlePermission(obj.auth))) {
+          next()
         } else {
-          temp = [...temp, v]
+          next('/404')
         }
-      })
-      const obj = temp.find((v: { path: string }) => to.path === v.path)
-      if (obj && (!obj.auth || handlePermission(obj.auth))) {
-        next()
-      } else {
-        next('/404')
       }
     }
   } else {
-    if (whiteRoute.includes(to.path)) {
-      next()
-    } else {
+    if (whiteRoute.includes(to.path)) next()
+    else {
       next(`/login?redirect=${to.path}`)
       done()
     }

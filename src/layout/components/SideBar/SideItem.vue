@@ -1,36 +1,24 @@
-<template v-if="item.meta && !item.hide">
+<template v-if="!item.hide">
   <div class="side-item">
-    <el-sub-menu
-      v-if="handlePermission(item.auth) && item.children && item.children.length"
-      :index="item.path"
-      popper-class="custom-popper-class"
-    >
-      <template #title>
-        <i :class="item.meta.icon" />
-        <span :style="iconStyle(item.meta.icon)">{{ item.meta.title }}</span>
-      </template>
-
-      <template v-for="child in item.children" :key="child.path">
-        <SideItem
-          v-if="handlePermission(child.auth) && child.children && child.children.length"
-          :item="child"
-          :index="child.path"
-        />
-        <template v-else>
-          <el-menu-item v-if="handlePermission(child.auth)" :index="child.path">
-            <i :class="child.meta.icon" />
-            <template #title>
-              <span :style="iconStyle(child.meta.icon)">{{ child.meta.title }}</span>
-            </template>
-          </el-menu-item>
+    <!-- 多个子菜单 -->
+    <template v-if="handleNestMenu(item)">
+      <el-sub-menu :index="item.path" popper-class="custom-popper-class">
+        <template #title>
+          <i v-show="item.meta.icon" :class="item.meta.icon" />
+          <span :style="iconStyle(item?.meta.icon)">{{ item.meta.title }}</span>
         </template>
-      </template>
-    </el-sub-menu>
+        <template v-for="child in item.children" :key="child.path">
+          <SideItem :item="child" :index="child.path" />
+        </template>
+      </el-sub-menu>
+    </template>
+
+    <!-- 单个主菜单 -->
     <template v-else>
       <el-menu-item v-if="handlePermission(item.auth)" :index="item.path">
-        <i :class="item.meta.icon" />
+        <i v-show="item.meta.icon" :class="item.meta.icon" />
         <template #title>
-          <span :style="iconStyle(item.meta.icon)">{{ item.meta.title }}</span>
+          <span :style="iconStyle(item?.meta.icon)">{{ item.meta.title }}</span>
         </template>
       </el-menu-item>
     </template>
@@ -54,8 +42,12 @@ const iconStyle = (icon: string) => {
   }
   return {}
 }
-// onBeforeMount(() => {
-//   console.log(props.item);
-// }),
+
+const handleNestMenu = (v: any) => {
+  if (v.nested) {
+    return handlePermission(v.auth)
+  }
+  return false
+}
 toRefs(props)
 </script>

@@ -12,6 +12,7 @@ export const useLayoutStore = defineStore({
     showHeader: layoutSetting.showHeader, // 是否显示右侧头部
     showCrumbs: layoutSetting.showCrumbs, // 是否显示面包屑
     showTabs: layoutSetting.showTabs, // 是否显示标签
+    onlyOpenOneMenu: layoutSetting.menuUniqueOpened, // 是否始终只打开一个菜单
     sideOpened: true, // 侧边栏打开状态
     hideBreadcrumb: false, // 隐藏面包屑
     isFullScreen: false, // 是否全屏true:是; false:否
@@ -50,6 +51,9 @@ export const useLayoutStore = defineStore({
     },
     getTabStatus(): boolean | undefined {
       return this.showTabs
+    },
+    getOnlyOneMenu(): boolean {
+      return this.onlyOpenOneMenu
     }
   },
   actions: {

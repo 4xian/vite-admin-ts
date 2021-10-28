@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { constantRoute } from './menu'
+import { constantRoute } from './modules/index'
+import { whiteRouter } from './modules/white'
+const allConstantRoute = [...whiteRouter, ...constantRoute]
+
+// 动态路由
+const asyncRouter = []
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: constantRoute
+  routes: allConstantRoute
 })
 
 export default router

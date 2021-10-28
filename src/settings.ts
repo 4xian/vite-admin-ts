@@ -11,7 +11,7 @@ export const layoutSetting = reactive<Partial<LayoutType>>({
   showTabs: true, // 是否显示顶部标签
   showHeader: true,
   showCrumbs: true, // 是否显示面包屑
-  menuUniqueOpened: true // 侧边栏是否只打开一个菜单
+  menuUniqueOpened: true // 侧边栏是否始终只打开一个菜单
 })
 
 export const pageTitle = ' - Vite-TS-Admin'

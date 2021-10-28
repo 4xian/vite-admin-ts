@@ -7,7 +7,13 @@
       <!-- </div> -->
     </div>
     <!-- <el-scrollbar> -->
-    <el-menu :router="true" :default-active="$route.path" :collapse="isOpen" :show-timeout="200">
+    <el-menu
+      :router="true"
+      :default-active="$route.path"
+      :unique-opened="onlyone"
+      :collapse="isOpen"
+      :show-timeout="200"
+    >
       <SidebarItem v-for="v in routerList" :key="v.path" :item="v"></SidebarItem>
     </el-menu>
     <!-- </el-scrollbar> -->
@@ -17,11 +23,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import SidebarItem from './SideItem.vue'
-import { constantRoute } from '@/router/menu'
+import { constantRoute } from '@/router/modules/index'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 const layoutStore = useLayoutSetting()
 
 const sideStatus = computed(() => layoutStore.getSideStatus)
 const isOpen = computed(() => !sideStatus.value)
-const routerList = constantRoute.find((v) => v.path === '/')?.children || []
+const onlyone = computed(() => layoutStore.getOnlyOneMenu)
+
+const routerList = computed(() => constantRoute)
 </script>
