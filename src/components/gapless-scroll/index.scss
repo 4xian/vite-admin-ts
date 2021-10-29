@@ -1,0 +1,14 @@
+.min-gapless-wrap {
+  position: relative;
+  overflow: hidden;
+
+  .scroll-empty {
+    height: 100%;
+    font-size: 14px;
+  }
+
+  .gapless-scroll-content {
+    display: flex;
+    height: 100%;
+  }
+}
