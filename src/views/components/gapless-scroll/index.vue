@@ -12,6 +12,7 @@
 <script lang="ts" setup>
 import GaplessScroll from '@/components/gapless-scroll/index.vue'
 import { ref, reactive, computed } from 'vue'
+import { ScrollOptions } from '@/components/gapless-scroll/type'
 
 const list = reactive([
   '滚动内容第一条',
@@ -22,11 +23,16 @@ const list = reactive([
   '滚动内容第六条',
   '滚动内容第七条',
   '滚动内容第八条',
-  '滚动内容第九条'
+  '滚动内容第九条',
+  '滚动内容第十条'
 ])
 
-const options = reactive({
-  speed: 2
+const options = reactive<Partial<ScrollOptions>>({
+  speed: 0.5,
+  direction: 'up',
+  scrollType: 0,
+  interval: 2500,
+  step: 42
 })
 </script>
 
@@ -38,6 +44,7 @@ const options = reactive({
 
   .scroll {
     padding: 10px 0;
+    // border: 1px solid;
   }
 }
 </style>

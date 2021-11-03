@@ -17,7 +17,7 @@
         <div ref="scrollItem" :style="slotStyle">
           <slot></slot>
         </div>
-        <div :style="slotStyle" v-html="copyScrollHtml"></div>
+        <div v-if="isGapless" :style="slotStyle" v-html="copyScrollHtml"></div>
       </div>
     </div>
     <div v-else class="scroll-empty flex-center">
@@ -46,7 +46,7 @@ const props = defineProps({
   // 外容器高度
   height: {
     type: Number,
-    default: 300
+    default: 220
   },
   // 数据列表
   data: {
@@ -55,7 +55,7 @@ const props = defineProps({
     default: () => []
   },
   // 配置
-  options: Object as PropType<ScrollOptions>
+  options: Object as PropType<Partial<ScrollOptions>>
 })
 
 const { width, height, options } = props
@@ -104,12 +104,13 @@ const {
   emptyWidth,
   direction,
   animateTime,
-  marginBias
+  marginBias,
+  scrollType
 } = mergeOptions
 
 const scrollWrap = ref<HTMLElement | null>(null)
 const scrollContent = ref<HTMLElement | null>(null)
-const copyScrollHtml = ref<HTMLElement | null>(null)
+const copyScrollHtml = ref<any>(null)
 // 位置偏移量X，Y
 const x = ref(0)
 const y = ref(0)
@@ -117,12 +118,15 @@ const y = ref(0)
 const realW = ref(0)
 const realH = ref(0)
 
+const offset = ref(0)
 const transitionTime = ref(0)
 // 鼠标是否悬浮容器中
 const isHover = ref(false)
 
 const animateTimer = ref<NodeJS.Timeout | number | null>(null)
 const timer = ref<NodeJS.Timeout | null>(null)
+
+const isGapless = ref(false)
 
 const emits = defineEmits(['activeIndex'])
 
@@ -154,6 +158,10 @@ const isScroll = computed(() => {
   return vScroll() || hScroll()
 })
 
+// const isGapless = computed(() => {
+//   return scrollType === 0 && isScroll.value
+// })
+
 /**
     @description watch
 */
@@ -163,7 +171,7 @@ watch(
   (val, old) => {
     if (!isEqual(val, old)) {
       nextTick(() => {
-        console.log('array变了')
+        // reset()
         // init()
       })
     }
@@ -187,12 +195,17 @@ const hScroll = () => {
 }
 
 // 重置变量
-const reset = () => {}
+const reset = () => {
+  cancelScroll()
+  x.value = 0
+  y.value = 0
+  isGapless.value = scrollType === 0 && isScroll.value
+}
 
 // 取消滚动
 const cancelScroll = () => {
   cancelAnimationFrame(Number(animateTimer))
-  clearTimeout(Number(timer))
+  clearTimeout(Number(timer.value))
 }
 
 // 开始滚动
@@ -205,38 +218,54 @@ const startScroll = () => {
     if (vScroll()) {
       // 向上
       if (direction === DirectionEnum.UP) {
-        if (y.value >= realH.value) y.value = 0
-        else y.value += speed || 1
+        if (scrollType === 1) {
+          if (y.value >= realH.value - height) y.value = 0
+          else y.value += speed
+        } else {
+          if (y.value >= realH.value) y.value = 0
+          else y.value += speed
+        }
       } else if (direction === DirectionEnum.DOWN) {
         //   向下
-        if (y.value < realH.value - height) y.value = realH.value * 2 - height
-        else y.value -= speed || 1
+        if (scrollType === 1) {
+          if (y.value <= 0) y.value = realH.value - height
+          else y.value -= speed
+        } else {
+          if (y.value < realH.value - height) y.value = realH.value * 2 - height
+          else y.value -= speed
+        }
       }
     } else if (hScroll()) {
       // 水平滚动
       // 向左
       if (direction === DirectionEnum.LEFT) {
-        if (x.value > realW.value) x.value = 0
-        else x.value += speed || 1
+        if (scrollType === 1) {
+          if (x.value > realW.value - width) x.value = 0
+          else x.value += speed
+        } else {
+          if (x.value > realW.value) x.value = 0
+          else x.value += speed
+        }
       } else if (direction === DirectionEnum.RIGHT) {
         // 向右
         if (x.value < realW.value - width) x.value = realW.value * 2 - width
-        else x.value -= speed || 1
+        else x.value -= speed
       }
     }
 
     if (timer.value) clearTimeout(Number(timer.value))
     // 滚动间隔
     if (interval) {
-      let offset = 0
-      if (vScroll()) offset = y.value
-      else if (hScroll()) offset = x.value
-      if (offset % (step || 1) === 0) {
-        emits('activeIndex', offset / (step || 1))
-      }
-      timer.value = setTimeout(() => {
+      if (vScroll()) offset.value = y.value
+      else if (hScroll()) offset.value = x.value
+      if (offset.value % step === 0) {
+        emits('activeIndex', offset.value / step)
+        timer.value = setTimeout(() => {
+          startScroll()
+        }, interval)
+      } else {
         startScroll()
-      }, interval)
+      }
     } else {
       startScroll()
     }
@@ -258,8 +287,10 @@ const mouseLeave = () => {
 const init = () => {
   realH.value = unref(scrollContent)?.offsetHeight || 0
   realW.value = unref(scrollContent)?.scrollWidth || 0
-  if (autoPlay && unref(isScroll)) startScroll()
-  else cancelScroll()
+  if (autoPlay && unref(isScroll)) {
+    if (unref(isGapless)) copyScrollHtml.value = unref(scrollContent)?.innerHTML
+    startScroll()
+  } else cancelScroll()
 }
 
 /**

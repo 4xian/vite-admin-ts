@@ -8,18 +8,18 @@ export enum DirectionEnum {
 
 // 滚动初始化选项
 export interface ScrollOptions {
-  scrollType?: number
-  direction?: DirectionEnum
-  speed?: number
-  step?: number
-  autoPlay?: boolean
-  hoverStop?: boolean
-  interval?: number
-  controls?: boolean
-  animateTime?: number
-  loop?: boolean
-  emptyImg?: string
-  emptyText?: string
-  emptyWidth?: string
-  marginBias?: number
+  scrollType: number
+  direction: 'up' | 'down' | 'left' | 'right'
+  speed: number
+  step: number
+  autoPlay: boolean
+  hoverStop: boolean
+  interval: number
+  controls: boolean
+  animateTime: number
+  loop: boolean
+  emptyImg: string
+  emptyText: string
+  emptyWidth: string
+  marginBias: number
 }
