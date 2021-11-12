@@ -12,8 +12,6 @@ import { useFullscreen } from '@vueuse/core'
 import { useLayoutSetting } from '@/store/modules/layout'
 const { toggle, isFullscreen } = useFullscreen()
 const store = useLayoutSetting()
-store
-
 const handleToggle = () => {
   toggle()
   store.setScreenStatus(!isFullscreen.value)

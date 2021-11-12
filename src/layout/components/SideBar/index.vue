@@ -1,10 +1,22 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import SidebarItem from './SideItem.vue'
+import { constantRoute } from '@/router/modules/index'
+import { useLayoutSetting } from '@/store/modules/layout/index'
+const layoutStore = useLayoutSetting()
+
+const sideStatus = computed(() => layoutStore.getSideStatus)
+const isOpen = computed(() => !sideStatus.value)
+const onlyone = computed(() => layoutStore.getOnlyOneMenu)
+
+const routerList = computed(() => constantRoute)
+</script>
+
 <template>
   <div class="sidebar-wrap">
     <div class="flex sidebar-logo align-center" @click="$router.push('/')">
-      <!-- <div> -->
-      <img src="@/assets/logo.png" alt="" />
-      <span v-show="!isOpen">Vite-TS-admin</span>
-      <!-- </div> -->
+      <!-- <img src="@/assets/logo.png" alt="" />
+      <span v-show="!isOpen">Vite-TS-admin</span> -->
     </div>
     <!-- <el-scrollbar> -->
     <el-menu
@@ -19,17 +31,3 @@
     <!-- </el-scrollbar> -->
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import SidebarItem from './SideItem.vue'
-import { constantRoute } from '@/router/modules/index'
-import { useLayoutSetting } from '@/store/modules/layout/index'
-const layoutStore = useLayoutSetting()
-
-const sideStatus = computed(() => layoutStore.getSideStatus)
-const isOpen = computed(() => !sideStatus.value)
-const onlyone = computed(() => layoutStore.getOnlyOneMenu)
-
-const routerList = computed(() => constantRoute)
-</script>

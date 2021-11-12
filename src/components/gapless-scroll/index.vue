@@ -1,12 +1,12 @@
 <template>
   <div ref="scrollWrap" class="min-gapless-wrap" :style="wrapStyle">
+    <div class="left-controls">
+      <slot name="left"></slot>
+    </div>
+    <div class="right-controls">
+      <slot name="right"></slot>
+    </div>
     <div v-if="data.length > 0" style="height: 100%;">
-      <div class="left-controls">
-        <slot name="left"></slot>
-      </div>
-      <div class="right-controls">
-        <slot name="right"></slot>
-      </div>
       <div
         ref="scrollContent"
         :class="{ 'gapless-scroll-content': !isVertical }"
@@ -59,6 +59,7 @@ const props = defineProps({
 })
 
 const { width, height, options } = props
+
 // 初始化配置
 const initOptions = reactive<ScrollOptions>({
   // 0:无缝滚动(用于无点击事件) 1: 触底滚动(到达最后一个会返回顶部，用于点击事件滚动) 2:单纯图片轮播
@@ -151,7 +152,7 @@ const slotStyle = computed(() => {
 const posStyle = computed(() => {
   return {
     transform: `translate(${-unref(x)}px,${-unref(y)}px)`,
-    transition: `all ${animateTime}s ease-in`
+    transition: `all ${transitionTime.value}s ease-in`
   }
 })
 const isScroll = computed(() => {
@@ -171,8 +172,8 @@ watch(
   (val, old) => {
     if (!isEqual(val, old)) {
       nextTick(() => {
-        // reset()
-        // init()
+        reset()
+        init()
       })
     }
   },
