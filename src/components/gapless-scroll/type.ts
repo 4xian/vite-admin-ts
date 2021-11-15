@@ -16,8 +16,8 @@ export interface ScrollOptions {
   hoverStop: boolean
   interval: number
   controls: boolean
+  controlsPadding: number[]
   animateTime: number
-  loop: boolean
   emptyImg: string
   emptyText: string
   emptyWidth: string
