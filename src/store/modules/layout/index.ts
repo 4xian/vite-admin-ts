@@ -25,7 +25,8 @@ export const useLayoutStore = defineStore({
       }
     ], // 头部标签列表
     cacheTabs: false, // 是否缓存头部标签页列表
-    isMobile: false // 是否为手机布局
+    isMobile: false, // 是否为手机布局
+    pageCache: layoutSetting.pageCache // 页面是否缓存
   }),
   getters: {
     getSideStatus(): boolean {

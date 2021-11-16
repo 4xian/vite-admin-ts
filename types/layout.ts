@@ -12,6 +12,7 @@ interface LayoutType {
   isMobile: boolean
   hideBreadcrumb: boolean
   menuUniqueOpened?: boolean
+  pageCache: boolean
 }
 
 interface TabMenuType extends RouteLocationNormalizedLoaded {

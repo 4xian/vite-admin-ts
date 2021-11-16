@@ -20,6 +20,24 @@ export const componentRouter = {
         title: '无缝滚动'
       },
       auth: '无缝滚动'
+    },
+    {
+      path: '/components/rich-text',
+      name: 'ComponentsRichText',
+      component: () => import('@/views/components/richText/index.vue'),
+      meta: {
+        title: '富文本'
+      },
+      auth: '富文本'
+    },
+    {
+      path: '/components/crop-img',
+      name: 'ComponentsCropImg',
+      component: () => import('@/views/components/cropImg/index.vue'),
+      meta: {
+        title: '图片裁剪'
+      },
+      auth: '图片裁剪'
     }
   ]
 }

@@ -42,7 +42,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, unref, reactive, computed, watch, nextTick } from 'vue'
-import type { PropType } from 'vue'
+import type { PropType, CSSProperties } from 'vue'
 import { DirectionEnum, ScrollOptions } from './type'
 import { isEqual, assign } from 'lodash-es'
 import { tryOnMounted, tryOnUnmounted } from '@vueuse/core'
@@ -160,37 +160,45 @@ const emits = defineEmits(['activeIndex'])
 /**
     @description computed
 */
-const wrapStyle = computed(() => {
-  return {
-    width: `${width}px`,
-    height: `${height}px`,
-    padding: `${controlsPadding[0]}px ${controlsPadding[1]}px`
+const wrapStyle = computed(
+  (): CSSProperties => {
+    return {
+      width: `${width}px`,
+      height: `${height}px`,
+      padding: `${controlsPadding[0]}px ${controlsPadding[1]}px`
+    }
   }
-})
+)
 
-const contentStyle = computed(() => {
-  return {
-    height: '100%',
-    overflow: 'hidden'
+const contentStyle = computed(
+  (): CSSProperties => {
+    return {
+      height: '100%',
+      overflow: 'hidden'
+    }
   }
-})
-const posStyle = computed(() => {
-  return {
-    transform: `translate(${-unref(x)}px,${-unref(y)}px)`,
-    transition: `all ${transitionTime.value}s ease-in`
+)
+const posStyle = computed(
+  (): CSSProperties => {
+    return {
+      transform: `translate(${-unref(x)}px,${-unref(y)}px)`,
+      transition: `all ${transitionTime.value}s ease-in`
+    }
   }
-})
+)
 
-const isVertical = computed(() => {
+const isVertical = computed((): boolean => {
   return direction === DirectionEnum.UP || direction === DirectionEnum.DOWN
 })
 
-const slotStyle = computed(() => {
-  return isVertical.value ? { overflow: 'hidden' } : { display: 'flex' }
-})
+const slotStyle = computed(
+  (): CSSProperties => {
+    return isVertical.value ? { overflow: 'hidden' } : { display: 'flex' }
+  }
+)
 
 // 是否符合滚动条件
-const isScroll = computed(() => {
+const isScroll = computed((): boolean => {
   return vScroll() || hScroll()
 })
 // 是否显示操作指示器

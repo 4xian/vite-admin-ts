@@ -1,7 +1,9 @@
 <template>
   <div class="demo-gapless-scroll">
-    <!-- <div class="scroll-title">无缝滚动demo</div> -->
-    <div class="scroll">
+    <div class="scroll-title">
+      <el-divider content-position="center">无缝滚动demo</el-divider>
+    </div>
+    <div class="scroll flex-center">
       <GaplessScroll :width="200" :height="236" :options="options" :data="list" @activeIndex="activeIndex">
         <template #up>
           <i class="el-icon-arrow-up"></i>
@@ -9,6 +11,12 @@
         <template #down>
           <i class="el-icon-arrow-down"></i>
         </template>
+        <!-- <template #left>
+          <i class="el-icon-arrow-left"></i>
+        </template>
+        <template #right>
+          <i class="el-icon-arrow-right"></i>
+        </template> -->
         <div v-for="v in list" :key="v" class="scroll-item">{{ v }}</div>
       </GaplessScroll>
     </div>
@@ -56,9 +64,7 @@ const activeIndex = (e: any) => {
 <style lang="scss" scoped>
 .demo-gapless-scroll {
   height: 100%;
-  padding: 20px 30px;
-  border: 1px solid red;
-
+  //   padding: 20px 30px;
   .scroll {
     &-item {
       //   width: 100px;
