@@ -69,6 +69,14 @@
         color: var(--sidebar-active-text-color);
         background-color: var(--sidebar-active-bg-color);
       }
+
+      .side-menu-notice {
+        padding: 1px 5px;
+        margin-left: 5px;
+        color: var(--sidebar-hover-text);
+        background-color: var(--sidebar-notice-color);
+        border-radius: 10px;
+      }
     }
   }
 

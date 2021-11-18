@@ -47,6 +47,15 @@ export const componentRouter = {
         title: '数字滚动'
       },
       auth: '数字滚动'
+    },
+    {
+      path: '/components/upload',
+      name: 'ComponentsUpload',
+      component: () => import('@/views/components/upload/index.vue'),
+      meta: {
+        title: '图片上传'
+      },
+      auth: '图片上传'
     }
   ]
 }

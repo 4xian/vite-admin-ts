@@ -6,6 +6,7 @@
         <template #title>
           <i v-show="item.meta.icon" :class="item.meta.icon" />
           <span :style="iconStyle(item?.meta.icon)">{{ item.meta.title }}</span>
+          <span v-if="handleNotice(item.meta.title)" class="side-menu-notice">{{ handleNotice(item.meta.title) }}</span>
         </template>
         <template v-for="child in item.children" :key="child.path">
           <SideItem :item="child" :index="child.path" />
@@ -19,6 +20,7 @@
         <i v-show="item.meta.icon" :class="item.meta.icon" />
         <template #title>
           <span :style="iconStyle(item?.meta.icon)">{{ item.meta.title }}</span>
+          <span v-if="handleNotice(item.meta.title)" class="side-menu-notice">{{ handleNotice(item.meta.title) }}</span>
         </template>
       </el-menu-item>
     </template>
@@ -27,7 +29,7 @@
 
 <script lang="ts" setup>
 import { toRefs, onBeforeMount } from 'vue'
-import { handlePermission } from '@/utils/auth'
+import { handlePermission, handleNotice } from '@/utils/auth'
 const props = defineProps({
   item: {
     required: true,

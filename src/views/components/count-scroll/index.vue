@@ -1,14 +1,40 @@
 <template>
-  <div class="count-scroll">
-    <!--  单个数字滚动 -->
+  <div class="count-scroll flex-column-center">
+    <!--  每次单个数字滚动 -->
     <div class="single-count flex">
-      <!-- 此处的key需独一无二 -->
-      <div v-for="(v, idx) in count" :key="v" class="single-count-item">
-        <MinCountScroll :key="uniqueKey()" :value="v" :delay="idx + 1"></MinCountScroll>
-      </div>
+      <template v-for="(v, idx) in count" :key="v">
+        <MinCountScroll
+          v-if="v !== ','"
+          :key="`${v}-${idx}`"
+          class="single-count-item"
+          :value="v"
+          :delay="idx + 0.5"
+        ></MinCountScroll>
+        <div v-else style="font-size: 24px;">,</div>
+      </template>
     </div>
     <div>
-      <el-button type="primary" @click="change">切换</el-button>
+      <el-button type="primary" @click="change">类型一：随机数字</el-button>
+    </div>
+    <!-- 多数字一起滚动 -->
+    <div class="single-count flex">
+      <MinCountScroll
+        custom-class="all-class"
+        separator-class="separator-class"
+        :type="2"
+        :value="allValue"
+        separator=","
+      >
+        <!-- <template #prefix>
+          <span>$</span>
+        </template>
+        <template #suffix>
+          <span>(元)</span>
+        </template> -->
+      </MinCountScroll>
+    </div>
+    <div>
+      <el-button type="primary" @click="changeTwo">类型二：切换数字</el-button>
     </div>
   </div>
 </template>
@@ -16,25 +42,40 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import MinCountScroll from '@/components/count-scroll/index.vue'
-const count = ref([6, 5, 4, 3])
+import { formatSeparator } from '@/utils/util'
+const count = ref<string[]>(['1', ',', '8', '7', '4'])
+const allValue = ref('5678')
 const change = () => {
-  count.value = [6, 5, 4, 3]
+  count.value = [...formatSeparator(String(Math.floor(Math.random() * 10000)), 3, ',')]
 }
-const uniqueKey = () => {
-  return `${new Date().getTime()}`
+const changeTwo = () => {
+  allValue.value = '35986'
 }
 </script>
 
 <style scoped lang="scss">
 .count-scroll {
   .single-count {
-    margin-bottom: 40px;
+    margin: 40px 0;
 
     &-item {
-      margin: 0 10px;
-      border: 1px solid;
-      border-radius: 4px;
+      margin: 0 5px;
+      font-size: 24px;
+      //   border: 1px solid;
+      border-radius: 10px;
     }
   }
+}
+</style>
+<style>
+.all-class {
+  margin: 0 5px;
+  font-size: 24px;
+  color: cornflowerblue;
+}
+
+.separator-class {
+  font-size: 24px;
+  color: cornflowerblue;
 }
 </style>

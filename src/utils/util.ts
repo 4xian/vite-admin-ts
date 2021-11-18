@@ -68,3 +68,8 @@ export const flatTree = (obj: any = {}, cid = 'children') => {
   flat(obj)
   return [...temp, { ...obj, [cid]: null }]
 }
+
+/* 字符串格式化多分位 */
+export const formatSeparator = (v: string, num = 3, flag = ',') => {
+  return v.replace(new RegExp(`\\d{1,${num}}(?=(\\d{${num}})+$)`, 'g'), (i) => i + flag)
+}
