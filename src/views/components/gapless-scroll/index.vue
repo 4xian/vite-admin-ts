@@ -63,8 +63,6 @@ const activeIndex = (e: any) => {
 
 <style lang="scss" scoped>
 .demo-gapless-scroll {
-  height: 100%;
-  //   padding: 20px 30px;
   .scroll {
     &-item {
       //   width: 100px;

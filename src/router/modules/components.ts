@@ -38,6 +38,15 @@ export const componentRouter = {
         title: '图片裁剪'
       },
       auth: '图片裁剪'
+    },
+    {
+      path: '/components/count-scroll',
+      name: 'ComponentsCountScroll',
+      component: () => import('@/views/components/count-scroll/index.vue'),
+      meta: {
+        title: '数字滚动'
+      },
+      auth: '数字滚动'
     }
   ]
 }

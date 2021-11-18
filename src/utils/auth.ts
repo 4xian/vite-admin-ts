@@ -16,7 +16,8 @@ export const handlePermission = (v: string) => {
     '组件',
     '无缝滚动',
     '富文本',
-    '图片裁剪'
+    '图片裁剪',
+    '数字滚动'
   ]
   return auth.some((t) => t === v)
   //   return true;

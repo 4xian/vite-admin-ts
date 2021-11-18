@@ -1,5 +1,5 @@
 /* 变量 */
-$color: "#fff";
+$color: '#fff';
 $sideWidth: 240px; // 侧边栏宽度
 $scrollbarWidth: 5px; // 滚动条宽度
 $min-theme: #409eff;
@@ -12,4 +12,6 @@ $subFontSize: 12px; // 副标题字体大小
   --sidebar-active-bg-color: #143757; //侧边栏选中背景色
   --sidebar-active-text-color: #fff; // 侧边栏选中字体颜色
   --sidebar-hover-bg-color: #143757; //侧边栏鼠标悬浮背景色
+  --sidebar-hover-text: rgba(255, 255, 255, 1); //侧边栏鼠标悬浮文字颜色
+  --sidebar-children-bg: #0f0303; //侧边栏子菜单背景色
 }

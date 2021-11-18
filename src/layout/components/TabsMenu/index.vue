@@ -20,7 +20,7 @@
       <el-dropdown>
         <i class="el-icon-arrow-down"></i>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu style="z-index: 99999;">
             <el-dropdown-item @click="closeTab(1, route)">关闭当前页</el-dropdown-item>
             <el-dropdown-item @click="closeTab(2)">关闭其他页</el-dropdown-item>
             <el-dropdown-item @click="closeTab(0)">关闭所有</el-dropdown-item>

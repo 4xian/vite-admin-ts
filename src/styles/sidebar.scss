@@ -26,8 +26,7 @@
     }
 
     .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out,
-        0s padding-right ease-in-out;
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
     }
 
     // .sub-el-icon {
@@ -43,17 +42,26 @@
     }
 
     .side-item {
+      ul.el-menu.el-menu--inline {
+        background-color: var(--sidebar-children-bg);
+      }
+
       .el-sub-menu__title {
         color: var(--sidebar-dark-text-color);
-        background-color: var(--sidebar-dark-bg-color);
+        // background-color: var(--sidebar-dark-bg-color);
+        &:hover {
+          color: var(--sidebar-hover-text);
+          background-color: transparent;
+        }
       }
 
       .el-menu-item {
         color: var(--sidebar-dark-text-color);
-        background-color: var(--sidebar-dark-bg-color);
+        // background-color: var(--sidebar-dark-bg-color);
 
         &:hover {
-          background-color: var(--sidebar-hover-bg-color);
+          color: var(--sidebar-hover-text);
+          background-color: transparent;
         }
       }
 
@@ -78,39 +86,6 @@
     }
   }
 
-  //   .el-submenu {
-  //     overflow: hidden;
-  //     & > .el-submenu__title {
-  //       padding: 0 !important;
-
-  //       .svg-icon {
-  //         margin-left: 20px;
-  //       }
-
-  //       .sub-el-icon {
-  //         margin-left: 19px;
-  //       }
-
-  //       .el-submenu__icon-arrow {
-  //         display: none;
-  //       }
-  //     }
-  //   }
-
-  //   .el-menu--collapse {
-  //     .el-submenu {
-  //       & > .el-submenu__title {
-  //         & > span {
-  //           display: inline-block;
-  //           width: 0;
-  //           height: 0;
-  //           overflow: hidden;
-  //           visibility: hidden;
-  //         }
-  //       }
-  //     }
-  //   }
-
   // mobile responsive
   .mobile {
     .sidebar-wrap {
@@ -126,20 +101,31 @@
 .custom-popper-class {
   .el-menu--popup {
     color: var(--sidebar-dark-text-color);
-    background-color: var(--sidebar-dark-bg-color);
+    background-color: var(--sidebar-children-bg);
 
     .el-menu-item {
       color: var(--sidebar-dark-text-color);
-      background-color: var(--sidebar-dark-bg-color);
+      //   background-color: var(--sidebar-dark-bg-color);
 
       &:hover {
-        background-color: var(--sidebar-hover-bg-color);
+        color: var(--sidebar-hover-text);
+        // background-color: var(--sidebar-hover-bg-color);
+        background-color: transparent;
       }
     }
 
     .el-menu-item.is-active {
       color: var(--sidebar-active-text-color);
       background-color: var(--sidebar-active-bg-color);
+    }
+
+    .el-sub-menu__title {
+      color: var(--sidebar-dark-text-color);
+      // background-color: var(--sidebar-dark-bg-color);
+      &:hover {
+        color: var(--sidebar-hover-text);
+        background-color: transparent;
+      }
     }
   }
 }

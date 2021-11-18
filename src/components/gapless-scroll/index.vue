@@ -41,7 +41,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, unref, reactive, computed, watch, nextTick } from 'vue'
+import { ref, unref, reactive, computed, watch, nextTick, onDeactivated } from 'vue'
 import type { PropType, CSSProperties } from 'vue'
 import { DirectionEnum, ScrollOptions } from './type'
 import { isEqual, assign } from 'lodash-es'
@@ -351,6 +351,7 @@ const handleRightClick = () => {
 }
 
 const handleUpClick = () => {
+  console.log('up', step)
   transitionTime.value = animateTime
   if (y.value <= 0) {
     transitionTime.value = 0
@@ -358,6 +359,7 @@ const handleUpClick = () => {
   } else y.value -= step
 }
 const handleDownClick = () => {
+  console.log('down', step)
   transitionTime.value = animateTime
   if (y.value >= unref(realH) - unref(realVisualH)) {
     transitionTime.value = 0
@@ -387,7 +389,11 @@ const init = () => {
 // })
 
 tryOnUnmounted(() => {
-  cancelScroll()
+  reset()
+  //   cancelScroll()
+})
+onDeactivated(() => {
+  reset()
 })
 </script>
 <style lang="scss" scoped>

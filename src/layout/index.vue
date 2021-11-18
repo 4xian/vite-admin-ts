@@ -32,7 +32,10 @@ const appObj = computed(() => {
   height: 100%;
 
   .app-contain {
+    display: flex;
+    overflow: hidden;
     flex: 1;
+    flex-direction: column;
   }
 }
 </style>

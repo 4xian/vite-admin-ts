@@ -25,7 +25,9 @@ const cache = computed(() => layoutStore.pageCache)
 <style lang="scss" scoped>
 .app-main {
   position: relative;
-  flex: 1;
   padding: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 1;
 }
 </style>
