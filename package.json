@@ -1,5 +1,6 @@
 {
   "name": "vite-admin-ts",
+  "author": "4xian",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite --host",
@@ -22,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "@element-plus/icons": "0.0.11",
     "@vueuse/core": "^6.7.3",
     "axios": "0.23.0",
     "cropperjs": "^1.5.12",

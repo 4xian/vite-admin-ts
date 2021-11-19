@@ -14,7 +14,11 @@ module.exports = {
   parserOptions: {
     parser: '@typescript-eslint/parser', // 解析器（parser）
     ecmaVersion: 2020, // ECMA版本
-    sourceType: 'module' //指定源代码存在的位置，script | module，默认为script
+    sourceType: 'module', //指定源代码存在的位置，script | module，默认为script
+    jsxPragma: 'React',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   // eslint:recommended:表示引入eslint的核心功能，并且报告一些常见的共同错误。
   //   extends: ['plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended'],

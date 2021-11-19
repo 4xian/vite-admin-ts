@@ -46,80 +46,22 @@
 <script lang="ts" setup>
 import { ref, reactive, computed, CSSProperties, watch, nextTick, unref, onBeforeUnmount } from 'vue'
 import { formatSeparator } from '@/utils/util'
-const props = defineProps({
-  // type:1 单个数字滚动
-  type: {
-    type: Number,
-    default: 1
-  },
-  // 自定义数字样式class
-  customClass: {
-    type: String,
-    default: ''
-  },
-  // 最终停留数字
-  value: {
-    type: [Number, String],
-    default: 0
-  },
-  // 多数字数字之间的延迟停留
-  delay: {
-    type: Number,
-    default: 2
-  },
-  // 滚动速度
-  speed: {
-    type: Number,
-    default: 5
-  },
-  // 多组件同页面不同的key
-  key: {
-    type: [Number, String],
-    default: new Date().getTime()
-  },
+import { propsData } from './props'
+const props = defineProps(propsData)
+const animateTimer = ref<NodeJS.Timeout | number>()
 
-  /* 类型二props */
-
-  // 类型二时转几轮停下
-  round: {
-    type: Number,
-    default: 1
-  },
-  // 类型二停下时缓慢步数
-  step: {
-    type: Number,
-    default: 3
-  },
-  // 分隔符
-  separator: {
-    type: String,
-    default: ''
-  },
-  // 分隔符样式
-  separatorClass: {
-    type: String,
-    default: ''
-  }
-})
-const defaultList = reactive([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) // 类型一列表
+/**
+ * @description 类型一
+ */
+// 列表
+const defaultList = reactive([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
 // 自定义样式后的单个数字高度
 const singleHeight = ref(0)
-// 数字滚动的高度
+// 数字当前滚动的高度
 const scrollH = ref(0)
 const singleRef = ref<HTMLElement | null>(null)
 const isFinish = ref(false)
 const timer = ref(0)
-const animateTimer = ref<NodeJS.Timeout | number>()
-
-// 类型二索引
-const idx = ref(0)
-const allItemRef = ref<HTMLElement | null>(null)
-const refList = reactive<{ allRef: any }>({
-  allRef: []
-})
-
-const emits = defineEmits(['finished'])
-
 const scrollHeight = computed(
   (): CSSProperties => {
     return {
@@ -135,10 +77,28 @@ const filterStyle = computed(
   }
 )
 
-// 类型二列表
+/**
+ * @description 类型二
+ */
+
+// 适用于类型二的emits
+const emits = defineEmits(['finished'])
+
+// 索引
+const idx = ref(0)
+const allItemRef = ref<HTMLElement | null>(null)
+const refList = reactive<{ allRef: any }>({
+  allRef: []
+})
+
+// 处理props数据列表
 const allList = computed(() => {
   return [...formatSeparator(String(props.value), 3, props.separator)]
 })
+
+/**
+ * @description methods
+ */
 
 const handleAllRef = (e: any, idx: number) => {
   refList.allRef[idx] = e
@@ -255,39 +215,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-.min-count-scroll {
-  .single-count {
-    overflow: hidden;
-  }
-
-  .all-count {
-    display: flex;
-    overflow: hidden;
-  }
-}
-
-.count-debounce {
-  animation: count-debounce 1.5s 0s ease-in-out;
-}
-@keyframes count-debounce {
-  0% {
-    transform: translateY(6px);
-  }
-
-  25% {
-    transform: translateY(-6px);
-  }
-
-  50% {
-    transform: translateY(3px);
-  }
-
-  75% {
-    transform: translateY(-3px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
+@import './index.scss';
 </style>

@@ -45,7 +45,7 @@ import { ref, unref, reactive, computed, watch, nextTick, onDeactivated, onActiv
 import type { PropType, CSSProperties } from 'vue'
 import { DirectionEnum, ScrollOptions } from './type'
 import { isEqual, assign } from 'lodash-es'
-import { tryOnMounted, tryOnUnmounted } from '@vueuse/core'
+import { tryOnMounted, tryOnBeforeUnmount } from '@vueuse/core'
 
 /**
     @description props / data / emits
@@ -388,7 +388,7 @@ const init = () => {
 //   init()
 // })
 
-tryOnUnmounted(() => {
+tryOnBeforeUnmount(() => {
   reset()
   //   cancelScroll()
 })

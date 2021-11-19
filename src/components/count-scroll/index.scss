@@ -1,0 +1,35 @@
+.min-count-scroll {
+  .single-count {
+    overflow: hidden;
+  }
+
+  .all-count {
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+.count-debounce {
+  animation: count-debounce 1.5s 0s ease-in-out;
+}
+@keyframes count-debounce {
+  0% {
+    transform: translateY(6px);
+  }
+
+  25% {
+    transform: translateY(-6px);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+
+  75% {
+    transform: translateY(-3px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
