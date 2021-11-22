@@ -69,10 +69,10 @@ const editor = reactive<{ text: any; instance: any }>({
 })
 const richText = ref<HTMLElement | null>(null)
 onMounted(() => {
-  handleInit()
+  handleInit1()
 })
 
-const handleInit = () => {
+const handleInit1 = () => {
   nextTick(() => {
     const [html, instance] = useRichText({ ref: richText.value, value: '' })
     editor.text = html
@@ -83,7 +83,7 @@ const handleInit = () => {
     editor.instance.txt.html('初始值')
   }, 3000)
 }
-const getHtml = () => {
+const getHtml1 = () => {
   console.log(editor.text?.html)
 }
 </script>

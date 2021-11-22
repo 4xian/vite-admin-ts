@@ -6,7 +6,9 @@ export const propsData = {
     default: ''
   },
   fileList: {
-    type: Array as PropType<Array<FileType>>
+    type: Array as PropType<Array<Partial<FileItem>>>,
+    required: true,
+    default: []
   },
   options: {
     type: Object as PropType<Partial<OptionsType>>,
@@ -15,14 +17,18 @@ export const propsData = {
 }
 
 export interface OptionsType {
+  accept: string
   immediate: boolean
   action: string
-  listType: string
+  listType: 'picture-card' | 'picture' | 'text'
   length: number
   size: number
   max: number
   multiple: boolean
-  fileType: string
+  disabled: boolean
+  width: number
+  text: string
+  tip: string
 }
 
 export interface FileType {
@@ -46,4 +52,20 @@ export const style: CssType = {
     cursor: 'pointer',
     borderRadius: '10px'
   }
+}
+
+export interface FileItem {
+  uid: string
+  name?: string
+  status?: string
+  response?: string
+  url?: string
+  type?: string
+  size: number
+  originFileObj: any
+}
+
+export interface FileInfo {
+  file: FileItem
+  fileList: FileItem[]
 }

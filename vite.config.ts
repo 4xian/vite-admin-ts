@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components'
 export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
@@ -15,6 +16,9 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       vueJsx(),
       Components({
         resolvers: [ElementPlusResolver()]
+      }),
+      ViteComponents({
+        customComponentResolvers: [AntDesignVueResolver()]
       }),
       viteMockServe({
         supportTs: true,

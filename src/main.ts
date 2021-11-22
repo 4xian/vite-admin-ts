@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-
+import 'ant-design-vue/dist/antd.css'
 import 'element-plus/dist/index.css'
 // global css
 import './styles/index.scss'

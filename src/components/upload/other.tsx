@@ -4,6 +4,7 @@ import { Plus } from '@element-plus/icons'
 import { ElUpload, ElIcon } from 'element-plus'
 // 初始化配置
 const initOptions: OptionsType = {
+  accept: 'image/*',
   // 是否立即上传，false为手动上传
   immediate: true,
   // 立即上传时的上传地址
@@ -18,8 +19,10 @@ const initOptions: OptionsType = {
   max: 15,
   // 文件大小
   size: 2,
-  // 文件接受类型
-  fileType: ''
+  disabled: false,
+  width: 100,
+  text: '',
+  tip: ''
 }
 export default defineComponent({
   name: 'MinUpload',
@@ -47,7 +50,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <ElUpload {...this.handleFunc}>
+      <ElUpload {...this.handleFunc} class="custom-upload">
         <ElIcon>
           <Plus />
         </ElIcon>
