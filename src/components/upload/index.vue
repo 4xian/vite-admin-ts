@@ -67,7 +67,7 @@ const initOptions: OptionsType = {
 }
 const mergeOptions = reactive<OptionsType>({ ...initOptions, ...props.options })
 const { accept, action, listType, multiple, disabled, width, size, immediate, length, text, tip, max } = mergeOptions
-const uploadWidth = ref(`${width}px`) // 图片宽高
+const uploadwidth = ref(`${width}px`) // 图片宽高
 const imgList = ref<Partial<FileItem>[]>(props.fileList) // 文件列表
 
 /* 上传之前拦截 */
@@ -97,7 +97,8 @@ const fileChange = (e: FileInfo) => {
   }
   if (immediate) {
     const done = e.fileList.filter((f) => f.status === 'done')
-    const flag = max === 1 ? e.file.status === 'done' : done && done.length === e.fileList.length - props.fileList.length
+    const flag =
+      max === 1 ? e.file.status === 'done' : done && done.length === e.fileList.length - props.fileList.length
     if (flag) {
       // 全都上传完毕
       imgList.value = e.fileList

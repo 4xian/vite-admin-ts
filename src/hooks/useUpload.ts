@@ -92,7 +92,7 @@ export const useUpload = (props: P) => {
       if (immediate) {
         const done = e.fileList.filter((f) => f.status === 'done')
         const flag =
-            max === 1 ? e.file.status === 'done' : done && done.length === e.fileList.length - props.fileList.length
+          max === 1 ? e.file.status === 'done' : done && done.length === e.fileList.length - props.fileList.length
         if (flag) {
           // 全都上传完毕
           imgList.value = e.fileList
