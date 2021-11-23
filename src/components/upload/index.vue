@@ -71,10 +71,9 @@ const uploadwidth = ref(`${width}px`) // 图片宽高
 const imgList = ref<Partial<FileItem>[]>(props.fileList) // 文件列表
 
 /* 上传之前拦截 */
-const beforeUpload = (file: FileItem, fileList: FileItem[]) => {
+const beforeUpload = (file: FileItem) => {
   const isLimit = file.size / 1024 / 1024 < size
   const nameLimit = file.name ? file.name.length : 0
-  console.log(fileList)
   if (!isLimit) {
     message.error(`图片需小于${size}mb`)
   }

@@ -1,5 +1,7 @@
 // import Layout from '@/layout/components/AppMain.vue'
 import Layout from '@/layout/index.vue'
+import { RouterItem } from '../type'
+import type { RouteRecordRaw } from 'vue-router'
 
 export const componentRouter = {
   path: '/components',
@@ -11,6 +13,7 @@ export const componentRouter = {
   },
   auth: '组件',
   nested: true,
+  redirect: '/components/gapless-scroll',
   children: [
     {
       path: '/components/gapless-scroll',
