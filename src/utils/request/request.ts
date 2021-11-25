@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios'
-import { ElMessage } from 'element-plus'
+import { message } from 'ant-design-vue'
 import { getCookie, removeCookie } from '../cookies'
 
 const baseURL = ''
@@ -31,10 +31,7 @@ service.interceptors.response.use(
       removeCookie('token')
       //   location.reload();
     }
-    ElMessage({
-      type: 'error',
-      message: err.message
-    })
+    message.error(err.message)
     return Promise.reject(err)
   }
 )

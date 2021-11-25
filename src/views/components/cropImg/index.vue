@@ -1,13 +1,13 @@
 <template>
   <div class="crop flex-column-center">
-    <el-divider content-position="center">图片裁剪demo</el-divider>
+    <a-divider content-position="center">图片裁剪demo</a-divider>
     <div class="crop-item align-center">
       <CropImg ref="cropRef" :src="src"></CropImg>
       <img :src="afterImg" style="max-width: 500px;" />
     </div>
     <div class="action">
-      <el-button type="primary" @click="instance?.reset()">重置</el-button>
-      <el-button type="primary" @click="cropFunc">裁剪</el-button>
+      <a-button type="primary" @click="instance?.reset()">重置</a-button>
+      <a-button type="primary" @click="cropFunc">裁剪</a-button>
     </div>
     <!-- <div>{{ imgInfo }}</div> -->
   </div>

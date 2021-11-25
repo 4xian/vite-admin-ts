@@ -3,7 +3,7 @@
     <img class="min-login-logo" :class="{ hidelogo: !sideStatus }" src="@/assets/images/login.svg" alt="" />
     <div class="min-login-form flex-center">
       <div class="form-title">{{ SysTitle }}</div>
-      <el-form ref="loginForm" class="login-form" :model="form" label-width="100px" :rules="rules">
+      <!-- <el-form ref="loginForm" class="login-form" :model="form" label-width="100px" :rules="rules">
         <el-form-item label="用户名：" prop="userName">
           <el-input v-model="form.userName" placeholder="请输入用户名"></el-input>
         </el-form-item>
@@ -11,28 +11,57 @@
           <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%;" type="primary" @click="submit">登录</el-button>
+          <el-button style="width: 100%" type="primary" @click="submit">登录</el-button>
         </el-form-item>
-      </el-form>
+      </el-form> -->
+      <a-form
+        ref="loginRef"
+        layout="horizontal"
+        class="login-form"
+        :label-col="formLayout.label"
+        :rules="rules"
+        :model="form"
+      >
+        <a-form-item label="用户名" required name="userName">
+          <a-input v-model:value="form.userName" placeholder="请输入用户名" />
+        </a-form-item>
+        <a-form-item label="密码" required name="password">
+          <a-input-password v-model:value="form.password" placeholder="请输入密码" />
+        </a-form-item>
+        <a-form-item :wrapper-col="{ span: 20, offset: 4 }">
+          <a-button type="primary" @click="submit">登录</a-button>
+        </a-form-item>
+      </a-form>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { SysTitle } from '@/settings'
 import { ref, unref, reactive, computed } from 'vue'
+import type { UnwrapRef } from 'vue'
 import { setCookie } from '@/utils/cookies'
-import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 import { userUserStoreSetup } from '@/store/modules/user/index'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
+import { message } from 'ant-design-vue'
+
+interface FormType {
+  userName: string
+  password: string
+}
+
+const formLayout = {
+  label: { style: { width: '80px' }},
+  wrapperCol: { span: 14 }
+}
 const layoutStore = useLayoutSetting()
 const sideStatus = computed(() => layoutStore.getSideStatus)
 const userStore = userUserStoreSetup()
 const router = useRouter()
+const loginRef = ref()
 
-const loginForm = ref()
-const form = reactive({
+const form = reactive<UnwrapRef<FormType>>({
   userName: '',
   password: ''
 })
@@ -54,23 +83,24 @@ const rules = reactive({
 })
 
 const submit = () => {
-  unref(loginForm).validate((valid: boolean) => {
-    if (valid) {
+  unref(loginRef)
+    .validate()
+    .then((valid: FormType) => {
       userStore
-        .login(form)
+        .login(valid)
         .then((res: any) => {
           console.log(res)
-          ElMessage.success('登录成功')
+          message.success('登录成功')
           router.push('/')
         })
         .catch((err: AxiosError) => {
           console.log(err)
-          ElMessage.error('登录失败')
+          message.error('登录失败')
         })
-    } else {
-      ElMessage.error('请填写必填字段!')
-    }
-  })
+    })
+    .catch((err: AxiosError) => {
+      console.log('err', err)
+    })
 }
 </script>
 <style lang="scss" scoped>
@@ -78,19 +108,21 @@ const submit = () => {
   position: relative;
   width: 100%;
   height: 100%;
-  min-width: 600px;
+  min-width: 500px;
 
   &-logo {
     width: 50%;
   }
 
   &-form {
-    height: 600px;
-    min-width: 600px;
-    padding: 50px;
+    height: 500px;
+    min-width: 500px;
+    padding: 0 30px;
+    margin-left: 30px;
     text-align: center;
-    border-radius: 10%;
+    border-radius: 10px;
     flex-direction: column;
+    box-shadow: 0 1px 50px 0 rgb(0 0 0 / 12%), 0 0 3px 0 rgb(0 0 0 / 4%);
 
     .form-title {
       margin-bottom: 50px;

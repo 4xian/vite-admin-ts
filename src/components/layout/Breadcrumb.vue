@@ -1,14 +1,14 @@
 <!-- 顶部面包屑 -->
 <template>
   <div v-if="crumbsStatus" class="min-breadcrumb" :class="{ isMobile: isMobile }">
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item
+    <a-breadcrumb separator=" > ">
+      <a-breadcrumb-item
         v-for="(v, idx) in routeList"
         :key="v.path"
       ><span v-if="idx === routeList.length">{{ v.meta.title }}</span>
         <router-link v-else :to="v.redirect || v.path">{{ v.meta.title }}</router-link>
-      </el-breadcrumb-item>
-    </el-breadcrumb>
+      </a-breadcrumb-item>
+    </a-breadcrumb>
   </div>
 </template>
 

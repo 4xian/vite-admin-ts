@@ -1,15 +1,19 @@
 <!-- 全屏 -->
 <template>
-  <el-tooltip effect="dark" content="全屏" placement="bottom">
+  <a-tooltip placement="bottom">
+    <template #title>
+      <span>全屏</span>
+    </template>
     <span class="min-fullscreen" @click="handleToggle">
-      <i class="el-icon-full-screen" />
+      <ExpandOutlined :style="{ fontSize: '16px' }" />
     </span>
-  </el-tooltip>
+  </a-tooltip>
 </template>
 
 <script lang="ts" setup>
 import { useFullscreen } from '@vueuse/core'
 import { useLayoutSetting } from '@/store/modules/layout'
+import { ExpandOutlined } from '@ant-design/icons-vue'
 const { toggle, isFullscreen } = useFullscreen()
 const store = useLayoutSetting()
 const handleToggle = () => {
@@ -21,10 +25,8 @@ const handleToggle = () => {
 <style lang="scss" scoped>
 .min-fullscreen {
   height: 100%;
-
-  &:hover {
-    background-color: #f6f6f6;
-  }
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .el-icon-full-screen {

@@ -2,13 +2,15 @@
   &::after {
     display: table;
     clear: both;
-    content: "";
+    content: '';
   }
 }
 
 @mixin scrollbar {
   &::-webkit-scrollbar {
+    display: block !important;
     width: $scrollbarWidth;
+    height: $scrollbarHeight;
   }
 
   &::-webkit-scrollbar-track {
@@ -16,8 +18,8 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(144, 147, 153, 0.5);
-    border-radius: 2px;
+    background-color: rgba(144, 147, 153, 0.3);
+    border-radius: 8px;
   }
 }
 

@@ -7,7 +7,7 @@ export const nestedRouter = {
   component: Layout,
   meta: {
     title: '菜单',
-    icon: 'el-icon-menu'
+    icon: 'menu'
   },
   auth: '菜单',
   nested: true,
@@ -18,7 +18,7 @@ export const nestedRouter = {
       component: () => import('@/views/menu/index.vue'),
       meta: {
         title: '子菜单',
-        icon: ''
+        icon: 'menu'
       },
       auth: '子菜单'
     },
@@ -27,7 +27,8 @@ export const nestedRouter = {
       name: 'Menu11',
       redirect: '/menu1-1-1',
       meta: {
-        title: '子菜单1-1'
+        title: '子菜单1-1',
+        icon: 'menu'
       },
       auth: '子菜单11',
       component: () => import('@/views/menu/menu1.vue'),
@@ -38,7 +39,8 @@ export const nestedRouter = {
           name: 'Menu1-1-1',
           component: () => import('@/views/menu/menu1.vue'),
           meta: {
-            title: '子菜单1-1-1'
+            title: '子菜单1-1-1',
+            icon: 'menu'
           },
           auth: '子菜单111'
         },
@@ -47,7 +49,8 @@ export const nestedRouter = {
           name: 'Menu1-1-2',
           component: () => import('@/views/menu/menu1.vue'),
           meta: {
-            title: '子菜单1-1-2'
+            title: '子菜单1-1-2',
+            icon: 'menu'
           },
           auth: '子菜单111'
         }

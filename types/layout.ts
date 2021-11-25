@@ -13,6 +13,7 @@ interface LayoutType {
   hideBreadcrumb: boolean
   menuUniqueOpened?: boolean
   pageCache: boolean
+  sideTheme: 'dark' | 'light'
 }
 
 interface TabMenuType extends RouteLocationNormalizedLoaded {

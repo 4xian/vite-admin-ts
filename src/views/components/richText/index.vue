@@ -1,16 +1,16 @@
 <!-- 法一：使用自定义组件 -->
 <template>
   <div class="rich">
-    <el-divider content-position="center">富文本demo</el-divider>
+    <a-divider content-position="center">富文本demo</a-divider>
     <div ref="richText" class="rich-item">
       <MinRichText ref="minRich" :init-value="text" @get-value="getValue"></MinRichText>
     </div>
-    <el-button type="primary" @click="getHtml">提取html</el-button>
-    <el-divider>分割线</el-divider>
+    <a-button type="primary" @click="getHtml">提取html</a-button>
+    <a-divider>分割线</a-divider>
     <div class="rich-item-one">
       <MinRichText ref="minRichOne" :init-value="textOne" :config="richConfig" @get-value="getValueOne"></MinRichText>
     </div>
-    <el-button type="primary" @click="getHtmlOne">提取另一个html</el-button>
+    <a-button type="primary" @click="getHtmlOne">提取另一个html</a-button>
   </div>
 </template>
 

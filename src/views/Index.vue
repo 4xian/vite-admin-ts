@@ -14,9 +14,5 @@ onMounted(() => {
 <style lang="scss" scoped>
 .index {
   color: red;
-
-  .span {
-    border: 1px solid aquamarine;
-  }
 }
 </style>

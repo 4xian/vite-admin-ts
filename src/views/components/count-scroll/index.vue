@@ -14,7 +14,7 @@
       </template>
     </div>
     <div>
-      <el-button type="primary" @click="change">类型一：随机数字</el-button>
+      <a-button type="primary" @click="change">类型一：随机数字</a-button>
     </div>
     <!-- 多数字一起滚动 -->
     <div class="single-count flex">
@@ -34,7 +34,7 @@
       </MinCountScroll>
     </div>
     <div>
-      <el-button type="primary" @click="changeTwo">类型二：切换数字</el-button>
+      <a-button type="primary" @click="changeTwo">类型二：切换数字</a-button>
     </div>
   </div>
 </template>

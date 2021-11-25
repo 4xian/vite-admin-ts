@@ -1,6 +1,6 @@
 <template>
   <div v-if="tabStatus" class="flex justify-space-between min-tabmenu align-center">
-    <el-scrollbar :vertical="false">
+    <div :class="['horizontal-scrollbar']">
       <router-link
         v-for="v in list"
         :key="v.path"
@@ -9,42 +9,56 @@
         :to="{ path: v.path, query: v.query, fullPath: v.fullPath }"
       >
         {{ v.title }}
-        <i
+        <CloseOutlined
           v-show="route.path === v.path && route.path !== '/home'"
-          class="el-icon-close"
+          class="icon-close"
           @click.prevent="closeTab(1, v)"
-        ></i>
+        />
       </router-link>
-    </el-scrollbar>
+    </div>
     <div class="tabmenu-right">
-      <el-dropdown>
-        <i class="el-icon-arrow-down"></i>
-        <template #dropdown>
-          <el-dropdown-menu style="z-index: 99999;">
-            <el-dropdown-item @click="closeTab(1, route)">关闭当前页</el-dropdown-item>
-            <el-dropdown-item @click="closeTab(2)">关闭其他页</el-dropdown-item>
-            <el-dropdown-item @click="closeTab(0)">关闭所有</el-dropdown-item>
-          </el-dropdown-menu>
+      <a-dropdown :overlay-style="{ zIndex: 10001 }">
+        <DownOutlined />
+        <template #overlay>
+          <a-menu>
+            <a-menu-item>
+              <ReloadOutlined />
+              <span @click="refresh()">刷新页面</span>
+            </a-menu-item>
+            <a-menu-item>
+              <DeleteRowOutlined />
+              <span @click="closeTab(1, route)">关闭当前页</span>
+            </a-menu-item>
+            <a-menu-item>
+              <EllipsisOutlined />
+              <span @click="closeTab(2)">关闭其他页</span>
+            </a-menu-item>
+            <a-menu-item>
+              <CloseOutlined />
+              <span @click="closeTab(0)">关闭所有</span>
+            </a-menu-item>
+          </a-menu>
         </template>
-      </el-dropdown>
+      </a-dropdown>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
+import { computed, watch, inject, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 import { TabMenuType } from '#/layout'
+import { CloseOutlined, DownOutlined, ReloadOutlined, DeleteRowOutlined, EllipsisOutlined } from '@ant-design/icons-vue'
+import { message } from 'ant-design-vue'
 const layoutStore = useLayoutSetting()
 const route = useRoute()
 const router = useRouter()
 const list = computed((): Partial<TabMenuType>[] => layoutStore.getTabsMenuList)
-
 const tabStatus = computed(() => {
   return layoutStore.getTabStatus
 })
-
+const refreshFunc: Function = inject('refresh') || Function
 const currentRoute = () => {
   const current: Partial<TabMenuType> = {
     path: route.path,
@@ -56,6 +70,12 @@ const currentRoute = () => {
   if (!flag && current.path !== '/home' && current.path !== '/login') {
     layoutStore.setTabsMenuList([...list.value, current])
   }
+}
+
+// 刷新路由
+const refresh = () => {
+  message.info('正在刷新...', 1)
+  refreshFunc()
 }
 
 /* 关闭tabs */
@@ -117,26 +137,35 @@ watch(
 
 <style lang="scss" scoped>
 .min-tabmenu {
-  padding: 4px 8px;
+  padding: 6px 15px 6px 12px;
   overflow: hidden;
   font-size: $subFontSize;
   white-space: nowrap;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%), 0 0 3px 0 rgb(0 0 0 / 4%);
+
+  .horizontal-scrollbar {
+    margin-right: 10px;
+    overflow-x: auto;
+    @include scrollbar;
+  }
 
   .tabmenu-item {
     display: inline-block;
     height: 26px;
     padding: 0 10px 0 12px;
     margin: 0 4px;
-    line-height: 26px;
+    line-height: 22px;
     color: #495060;
     cursor: pointer;
-    background-color: #fff;
     border: 1px solid #e6e6e6;
-    border-radius: 4px;
 
-    i {
-      padding: 2px;
+    &:hover {
+      color: #fff;
+      background-color: $min-theme;
+    }
+
+    .icon-close {
+      font-size: 10px;
 
       &:hover {
         color: red;
@@ -146,14 +175,14 @@ watch(
 
   .tabmenu-active {
     position: relative;
-    padding: 0 10px 0 14px;
+    padding: 0 10px 0 16px;
     color: #fff;
     background-color: $min-theme;
 
     &::before {
       position: absolute;
       top: 50%;
-      left: 6px;
+      left: 5px;
       display: inline-block;
       width: 6px;
       height: 6px;

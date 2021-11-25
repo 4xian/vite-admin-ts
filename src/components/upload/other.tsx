@@ -1,4 +1,4 @@
-import { propsData, OptionsType, style } from './props'
+/* import { propsData, OptionsType, style } from './props'
 import { ref, reactive, defineComponent } from 'vue'
 import { Plus } from '@element-plus/icons'
 import { ElUpload, ElIcon } from 'element-plus'
@@ -58,3 +58,4 @@ export default defineComponent({
     )
   }
 })
+ */

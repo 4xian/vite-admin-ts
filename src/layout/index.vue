@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrap flex" :class="appObj">
+  <div class="app-wrap flex" :class="customClass">
     <Sidebar />
     <div class="app-contain">
       <Navbar />
@@ -19,7 +19,7 @@ import AppMain from '@/layout/components/AppMain.vue'
 const layoutStore = useLayoutSetting()
 const status = computed(() => layoutStore.getSideStatus)
 const isMobile = computed(() => layoutStore.getMobileStatus)
-const appObj = computed(() => {
+const customClass = computed(() => {
   return {
     hideMenu: !status.value,
     mobile: isMobile.value

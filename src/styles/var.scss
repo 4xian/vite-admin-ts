@@ -1,18 +1,18 @@
 /* 变量 */
 $color: '#fff';
 $sideWidth: 240px; // 侧边栏宽度
+$sideCollapsedWidth: 60px; // 侧边栏折叠宽度
 $scrollbarWidth: 5px; // 滚动条宽度
-$min-theme: #409eff;
-$navbarHeight: 45px; //头部高度
+$scrollbarHeight: 5px; // 滚动条高度
+$min-theme: #1890ff;
+$navbarHeight: 50px; //头部高度
 $customFontSize: 14px; // 主题字体大小
 $subFontSize: 12px; // 副标题字体大小
 :root {
-  --sidebar-dark-bg-color: #0c2135; // 侧边栏背景颜色
-  --sidebar-dark-text-color: rgba(255, 255, 255, 0.7); // 侧边栏字体颜色
-  --sidebar-active-bg-color: #143757; //侧边栏选中背景色
-  --sidebar-active-text-color: #fff; // 侧边栏选中字体颜色
-  --sidebar-hover-bg-color: #143757; //侧边栏鼠标悬浮背景色
-  --sidebar-hover-text: rgba(255, 255, 255, 1); //侧边栏鼠标悬浮文字颜色
-  --sidebar-children-bg: #0f0303; //侧边栏子菜单背景色
-  --sidebar-notice-color: #f00; // 侧边栏通知背景色
+  --sidebar-dark-bg: #001529; // 侧边栏dark主题背景色
+  --sidebar-dark-color: rgba(255, 255, 255, 0.7); // 侧边栏dark主题字体颜色
+  --sidebar-light-bg: #fff; // 侧边栏light主题背景色
+  --sidebar-light-color: #001529; // 侧边栏light主题字体颜色
+  --sidebar-notice-bg: #f00; // 侧边栏通知背景色
+  --sidebar-notice-color: #fff; // 侧边栏通知字体色
 }

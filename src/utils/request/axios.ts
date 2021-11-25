@@ -1,11 +1,11 @@
 import type { AxiosResponse, AxiosRequestConfig, AxiosInstance, AxiosError } from 'axios'
-import { getCookie, removeCookie } from '../cookies'
+import { getCookie } from '../cookies'
 import { Result, AxiosRequestOptions, ReqOptions, RequestTypeEnum } from '#/request'
 
 import { cloneDeep } from 'lodash-es'
 import { isString } from '../is'
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { message } from 'ant-design-vue'
 
 export class Request {
   private reqInstance: AxiosInstance
@@ -39,10 +39,7 @@ export class Request {
         return res.data
       },
       (err: AxiosError) => {
-        ElMessage({
-          type: 'error',
-          message: err.message
-        })
+        message.error(err.message)
         return Promise.reject(err)
       }
     )

@@ -7,7 +7,7 @@ export const systemRouter = {
   component: Layout,
   meta: {
     title: '系统管理',
-    icon: 'el-icon-setting'
+    icon: 'system'
   },
   auth: '系统管理',
   nested: true,
@@ -18,8 +18,8 @@ export const systemRouter = {
       name: 'SystemRole',
       component: () => import('@/views/system/role/index.vue'),
       meta: {
-        title: '角色管理'
-        //   icon: "el-icon-key",
+        title: '角色管理',
+        icon: 'role'
       },
       auth: '角色管理'
     },
@@ -28,8 +28,8 @@ export const systemRouter = {
       name: 'SystemUser',
       component: () => import('@/views/system/user/index.vue'),
       meta: {
-        title: '用户管理'
-        //   icon: "el-icon-user",
+        title: '用户管理',
+        icon: 'user'
       },
       auth: '用户管理'
     }

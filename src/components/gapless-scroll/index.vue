@@ -45,7 +45,7 @@ import { ref, unref, reactive, computed, watch, nextTick, onDeactivated, onActiv
 import type { PropType, CSSProperties } from 'vue'
 import { DirectionEnum, ScrollOptions } from './type'
 import { isEqual, assign } from 'lodash-es'
-import { tryOnMounted, tryOnBeforeUnmount } from '@vueuse/core'
+import { tryOnBeforeUnmount } from '@vueuse/core'
 
 /**
     @description props / data / emits

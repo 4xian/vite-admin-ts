@@ -4,18 +4,20 @@
     width: $sideWidth !important;
     height: 100%;
     // padding-top: $navbarHeight;
-    overflow: hidden;
-    background-color: var(--sidebar-dark-bg-color);
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--sidebar-dark-bg);
     transition: width 0.28s;
+    @include scrollbar;
 
     .sidebar-logo {
       width: 100%;
       height: $navbarHeight;
       justify-content: space-evenly;
 
-      span {
-        font-size: 22px;
-        color: var(--sidebar-active-text-color);
+      .sidebar-top-title {
+        font-size: 24px;
+        color: var(--sidebar-dark-color);
         @include text-overflow;
       }
 
@@ -25,70 +27,55 @@
       }
     }
 
-    .horizontal-collapse-transition {
-      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
-    }
-
-    // .sub-el-icon {
-    //   margin-right: 12px;
-    //   margin-left: -2px;
-    // }
-
-    .el-menu {
-      width: 100% !important;
-      height: 100%;
-      background-color: var(--sidebar-dark-bg-color);
-      border: none;
-    }
-
     .side-item {
-      ul.el-menu.el-menu--inline {
-        background-color: var(--sidebar-children-bg);
-      }
-
-      .el-sub-menu__title {
-        color: var(--sidebar-dark-text-color);
-        // background-color: var(--sidebar-dark-bg-color);
-        &:hover {
-          color: var(--sidebar-hover-text);
-          background-color: transparent;
-        }
-      }
-
-      .el-menu-item {
-        color: var(--sidebar-dark-text-color);
-        // background-color: var(--sidebar-dark-bg-color);
-
-        &:hover {
-          color: var(--sidebar-hover-text);
-          background-color: transparent;
-        }
-      }
-
-      .el-menu-item.is-active {
-        color: var(--sidebar-active-text-color);
-        background-color: var(--sidebar-active-bg-color);
-      }
-
       .side-menu-notice {
         padding: 0 5px;
         margin-left: 5px;
-        color: var(--sidebar-hover-text);
-        background-color: var(--sidebar-notice-color);
+        color: var(--sidebar-notice-color);
+        background-color: var(--sidebar-notice-bg);
         border-radius: 10px;
       }
     }
   }
 
+  .light-theme {
+    background-color: var(--sidebar-light-bg);
+
+    .sidebar-top-title {
+      color: var(--sidebar-light-color);
+    }
+  }
+
+  // 折叠菜单
   .hideMenu {
     .sidebar-wrap {
-      width: 62px !important;
+      width: $sideCollapsedWidth !important;
       transition: width 0.28s;
 
-      .el-sub-menu__title {
-        span,
-        .el-sub-menu__icon-arrow {
-          display: none;
+      .ant-menu.ant-menu-inline-collapsed {
+        width: $sideCollapsedWidth !important;
+      }
+
+      .side-item {
+        .ant-menu-item {
+          padding: 0;
+          text-align: center;
+          text-overflow: clip;
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-vertical {
+          .ant-menu-submenu-title {
+            padding: 0;
+            text-align: center;
+            text-overflow: clip;
+          }
+        }
+
+        li {
+          .ant-menu-title-content,
+          .ant-menu-submenu-arrow {
+            display: none;
+          }
         }
       }
     }
@@ -98,42 +85,6 @@
   .mobile {
     .sidebar-wrap {
       display: none !important;
-    }
-  }
-}
-
-.el-popper.is-light {
-  border: none;
-}
-
-.custom-popper-class {
-  .el-menu--popup {
-    color: var(--sidebar-dark-text-color);
-    background-color: var(--sidebar-children-bg);
-
-    .el-menu-item {
-      color: var(--sidebar-dark-text-color);
-      //   background-color: var(--sidebar-dark-bg-color);
-
-      &:hover {
-        color: var(--sidebar-hover-text);
-        // background-color: var(--sidebar-hover-bg-color);
-        background-color: transparent;
-      }
-    }
-
-    .el-menu-item.is-active {
-      color: var(--sidebar-active-text-color);
-      background-color: var(--sidebar-active-bg-color);
-    }
-
-    .el-sub-menu__title {
-      color: var(--sidebar-dark-text-color);
-      // background-color: var(--sidebar-dark-bg-color);
-      &:hover {
-        color: var(--sidebar-hover-text);
-        background-color: transparent;
-      }
     }
   }
 }

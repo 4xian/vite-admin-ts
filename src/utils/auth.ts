@@ -4,7 +4,8 @@
 
 export const handlePermission = (v: string) => {
   //   const auth = getCookie("auth");
-  const auth = [
+  const btn = ['按钮权限']
+  const menu = [
     '首页',
     '关于',
     '系统管理',
@@ -21,6 +22,7 @@ export const handlePermission = (v: string) => {
     '数字滚动',
     '图片上传'
   ]
+  const auth = [...btn, ...menu]
   return auth.some((t) => t === v)
   //   return true;
 }

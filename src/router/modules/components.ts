@@ -9,7 +9,7 @@ export const componentRouter = {
   component: Layout,
   meta: {
     title: '组件',
-    icon: 'el-icon-setting'
+    icon: 'component'
   },
   auth: '组件',
   nested: true,
@@ -20,7 +20,8 @@ export const componentRouter = {
       name: 'ComponentsGaplessScroll',
       component: () => import('@/views/components/gapless-scroll/index.vue'),
       meta: {
-        title: '无缝滚动'
+        title: '无缝滚动',
+        icon: 'gapless-scroll'
       },
       auth: '无缝滚动'
     },
@@ -29,7 +30,8 @@ export const componentRouter = {
       name: 'ComponentsRichText',
       component: () => import('@/views/components/richText/index.vue'),
       meta: {
-        title: '富文本'
+        title: '富文本',
+        icon: 'rich-text'
       },
       auth: '富文本'
     },
@@ -38,7 +40,8 @@ export const componentRouter = {
       name: 'ComponentsCropImg',
       component: () => import('@/views/components/cropImg/index.vue'),
       meta: {
-        title: '图片裁剪'
+        title: '图片裁剪',
+        icon: 'crop-img'
       },
       auth: '图片裁剪'
     },
@@ -47,7 +50,8 @@ export const componentRouter = {
       name: 'ComponentsCountScroll',
       component: () => import('@/views/components/count-scroll/index.vue'),
       meta: {
-        title: '数字滚动'
+        title: '数字滚动',
+        icon: 'count-scroll'
       },
       auth: '数字滚动'
     },
@@ -56,7 +60,8 @@ export const componentRouter = {
       name: 'ComponentsUpload',
       component: () => import('@/views/components/upload/index.vue'),
       meta: {
-        title: '图片上传'
+        title: '图片上传',
+        icon: 'upload'
       },
       auth: '图片上传'
     }

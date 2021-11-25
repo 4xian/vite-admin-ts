@@ -8,7 +8,7 @@ export const homeRouter = {
   auth: '首页',
   meta: {
     title: '首页',
-    icon: 'el-icon-help'
+    icon: 'home'
   },
   nested: false,
   children: [

@@ -1,15 +1,15 @@
 <template>
   <div class="demo-gapless-scroll">
     <div class="scroll-title">
-      <el-divider content-position="center">无缝滚动demo</el-divider>
+      <a-divider content-position="center">无缝滚动demo</a-divider>
     </div>
     <div class="scroll flex-center">
       <GaplessScroll :width="200" :height="236" :options="options" :data="list" @activeIndex="activeIndex">
         <template #up>
-          <i class="el-icon-arrow-up"></i>
+          <UpOutlined />
         </template>
         <template #down>
-          <i class="el-icon-arrow-down"></i>
+          <DownOutlined />
         </template>
         <!-- <template #left>
           <i class="el-icon-arrow-left"></i>
@@ -27,6 +27,7 @@
 import GaplessScroll from '@/components/gapless-scroll/index.vue'
 import { ref, reactive, computed } from 'vue'
 import { ScrollOptions } from '@/components/gapless-scroll/type'
+import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
 
 const list = reactive([
   /* '滚动内容第一条哈哈哈哈哈哈',

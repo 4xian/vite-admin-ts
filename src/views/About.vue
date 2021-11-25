@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     关于页面
-    <el-button v-if="handlePermission('按钮权限')">按钮权限</el-button>
+    <a-button v-if="handlePermission('按钮权限')" type="primary">按钮权限</a-button>
   </div>
 </template>
 

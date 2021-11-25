@@ -9,7 +9,6 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import TriggleIcon from '@/components/layout/TriggerIcon.vue'
@@ -18,9 +17,7 @@ import FullScreen from '@/components/layout/FullScreen.vue'
 import Profile from '@/components/layout/Profile.vue'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 const layoutSetting = useLayoutSetting()
-
 const sideOpened = computed(() => layoutSetting.sideOpened)
-
 const handleTriggleIcon = () => {
   layoutSetting.setSideOpened(!sideOpened.value)
 }
@@ -28,13 +25,14 @@ const handleTriggleIcon = () => {
 <style lang="scss" scoped>
 .navbar {
   height: $navbarHeight;
+  padding: 0 15px;
   line-height: $navbarHeight;
   border: 1px solid #e5e7eb;
 
   .head-right {
+    height: 100%;
     flex: 1;
     justify-content: end;
-    height: 100%;
   }
 }
 </style>

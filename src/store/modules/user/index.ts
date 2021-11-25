@@ -1,4 +1,3 @@
-import { Nullable } from 'element-plus/lib/utils/types'
 import { defineStore } from 'pinia'
 import { getCookie, setCookie, removeCookie } from '@/utils/cookies'
 import { loginApi } from '@/api/user'
@@ -10,13 +9,13 @@ enum RoleItem {
 
 interface UserInfo {
   id?: string | number
-  username?: string
+  userName?: string
   avatar?: string
   roles?: string[]
 }
 
 interface UserState {
-  userInfo: Nullable<UserInfo>
+  userInfo: Partial<UserInfo>
   token?: string
   roles: RoleItem[]
 }
@@ -24,7 +23,7 @@ interface UserState {
 export const useUserStore = defineStore({
   id: 'user-info',
   state: (): UserState => ({
-    userInfo: null,
+    userInfo: {},
     token: undefined,
     roles: []
   }),
@@ -43,7 +42,7 @@ export const useUserStore = defineStore({
       this.token = t || ''
       setCookie('token', t)
     },
-    setUserInfo(v: Nullable<UserInfo>) {
+    setUserInfo(v: Partial<UserInfo>) {
       this.userInfo = v
       setCookie('userInfo', v as string)
     },
@@ -57,12 +56,12 @@ export const useUserStore = defineStore({
     },
 
     // 异步
-    async login(_params: { userName: string; password: string }): Promise<UserInfo> {
+    async login(params: { userName: string; password: string }): Promise<UserInfo> {
       try {
         // const userData = await loginApi(params)
         // const { token } = userData
         this.setToken('1')
-        this.setUserInfo({ username: 'ceshi' })
+        this.setUserInfo({ userName: params.userName })
         const info = this.getUserInfo || {}
         return info
       } catch (err) {

@@ -7,7 +7,7 @@ export const aboutRouter = {
   component: Layout,
   meta: {
     title: '关于',
-    icon: 'el-icon-phone-outline'
+    icon: 'about'
   },
   auth: '关于',
   nested: false,
