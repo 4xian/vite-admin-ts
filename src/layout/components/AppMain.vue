@@ -1,16 +1,14 @@
 <template>
   <section class="app-main">
-    <router-view v-slot="{ Component, route }">
-      <transition name="fade-slide" mode="out-in">
-        <template v-if="cache">
-          <keep-alive>
+    <router-view>
+      <template #default="{ Component, route }">
+        <transition name="fade-slide" mode="out-in">
+          <keep-alive v-if="cache">
             <component :is="Component" :key="route.fullPath" />
           </keep-alive>
-        </template>
-        <template v-else>
-          <component :is="Component" :key="route.fullPath" />
-        </template>
-      </transition>
+          <component :is="Component" v-else :key="route.fullPath" />
+        </transition>
+      </template>
     </router-view>
   </section>
 </template>

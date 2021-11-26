@@ -1,6 +1,8 @@
 export interface UserInfo {
-  name: string
-  title: string
+  id?: string | number
+  userName?: string
+  avatar?: string
+  roles?: string[]
 }
 
 export interface UserId {

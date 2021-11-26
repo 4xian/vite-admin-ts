@@ -1,9 +1,9 @@
 <template>
   <div :class="['sidebar-wrap', { 'light-theme': isLight }]">
-    <div class="flex sidebar-logo align-center" @click="$router.push('/')">
+    <!-- <div class="flex sidebar-logo align-center" @click="$router.push('/')">
       <img src="@/assets/logo.png" alt="" />
       <span v-show="!isOpen" class="sidebar-top-title">Vite-TS-admin</span>
-    </div>
+    </div> -->
     <a-menu
       v-model:selectedKeys="path.selectKeys"
       v-model:openKeys="path.openKeys"

@@ -1,5 +1,5 @@
 import { MockMethod } from 'vite-plugin-mock'
-
+import { Random } from 'mockjs'
 const userList = [
   {
     username: 'admin',
@@ -42,24 +42,21 @@ const userMockList: MockMethod[] = [
     timeout: 1000,
     statusCode: 200,
     response: ({ body }: any) => {
-      let flag = -1
-      userList.forEach((item, index) => {
-        if (item.username === body.username && item.password === body.password) {
-          flag = index
-        }
-      })
-      if (~flag) {
-        const data = {
-          code: 20000,
+      const { userName, password } = body
+      if (password === '123456') {
+        return {
+          code: 1,
           message: '登录成功',
-          token: new Date().getTime().toString(32),
-          ...userList[flag]
+          data: {
+            userName,
+            token: new Date().getTime().toString(32)
+          }
         }
-        return data
       } else {
         return {
-          code: 40000,
-          message: '用户名或密码错误'
+          code: 0,
+          message: '密码错误',
+          data: null
         }
       }
     }

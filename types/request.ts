@@ -9,7 +9,7 @@ export interface AxiosRequestOptions extends AxiosRequestConfig {
   initOptions?: ReqOptions
 }
 
-export interface Result<T = any> {
+export interface Response<T = any> {
   code: number
   message: string
   data: T

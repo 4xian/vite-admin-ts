@@ -1,7 +1,7 @@
 /* 菜单/路由权限 */
 
 // import { getCookie } from './cookies'
-
+import { SystemType } from '#/system'
 export const handlePermission = (v: string) => {
   //   const auth = getCookie("auth");
   const btn = ['按钮权限']
@@ -40,6 +40,89 @@ const noticeList = [
   {
     name: '数字滚动',
     total: 99
+  }
+]
+
+// 侧边栏菜单树形数据
+export const menuTreeList: SystemType.PermissionType[] = [
+  {
+    title: '首页',
+    key: 100,
+    children: []
+  },
+  {
+    title: '系统管理',
+    key: 101,
+    children: [
+      {
+        title: '角色管理',
+        key: 1010,
+        children: []
+      },
+      {
+        title: '用户管理',
+        key: 1011,
+        children: []
+      }
+    ]
+  },
+  {
+    title: '组件',
+    key: 102,
+    children: [
+      {
+        title: '无缝滚动',
+        key: 1020,
+        children: []
+      },
+      {
+        title: '富文本',
+        key: 1021,
+        children: []
+      },
+      {
+        title: '图片裁剪',
+        key: 1022,
+        children: []
+      },
+      {
+        title: '数字滚动',
+        key: 1023,
+        children: []
+      },
+      {
+        title: '图片上传',
+        key: 1024,
+        children: []
+      }
+    ]
+  },
+  {
+    title: '关于',
+    key: 103,
+    children: []
+  },
+  {
+    title: '菜单',
+    key: 104,
+    children: [
+      {
+        title: '子菜单',
+        key: 1041,
+        children: []
+      },
+      {
+        title: '子菜单1-1',
+        key: 1041,
+        children: [
+          {
+            title: '子菜单1-1-1',
+            key: 10411,
+            children: []
+          }
+        ]
+      }
+    ]
   }
 ]
 

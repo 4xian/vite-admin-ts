@@ -3,17 +3,6 @@
     <img class="min-login-logo" :class="{ hidelogo: !sideStatus }" src="@/assets/images/login.svg" alt="" />
     <div class="min-login-form flex-center">
       <div class="form-title">{{ SysTitle }}</div>
-      <!-- <el-form ref="loginForm" class="login-form" :model="form" label-width="100px" :rules="rules">
-        <el-form-item label="用户名：" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入用户名"></el-input>
-        </el-form-item>
-        <el-form-item label="密码：" prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button style="width: 100%" type="primary" @click="submit">登录</el-button>
-        </el-form-item>
-      </el-form> -->
       <a-form
         ref="loginRef"
         layout="horizontal"
@@ -45,7 +34,8 @@ import { useLayoutSetting } from '@/store/modules/layout/index'
 import { userUserStoreSetup } from '@/store/modules/user/index'
 import type { AxiosError } from 'axios'
 import { message } from 'ant-design-vue'
-
+import { Response } from '#/request'
+import { LoginResult } from '@/api/models/user'
 interface FormType {
   userName: string
   password: string
@@ -88,10 +78,13 @@ const submit = () => {
     .then((valid: FormType) => {
       userStore
         .login(valid)
-        .then((res: any) => {
-          console.log(res)
-          message.success('登录成功')
-          router.push('/')
+        .then((res: Response<LoginResult>) => {
+          if (res.code === 1) {
+            message.success('登录成功')
+            router.push('/')
+          } else {
+            message.error(res.message)
+          }
         })
         .catch((err: AxiosError) => {
           console.log(err)

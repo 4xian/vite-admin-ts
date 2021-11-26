@@ -1,6 +1,6 @@
 import type { AxiosResponse, AxiosRequestConfig, AxiosInstance, AxiosError } from 'axios'
 import { getCookie } from '../cookies'
-import { Result, AxiosRequestOptions, ReqOptions, RequestTypeEnum } from '#/request'
+import { Response, AxiosRequestOptions, ReqOptions, RequestTypeEnum } from '#/request'
 
 import { cloneDeep } from 'lodash-es'
 import { isString } from '../is'
@@ -129,8 +129,8 @@ export class Request {
 
     return new Promise((resolve, reject) => {
       this.reqInstance
-        .request<any, AxiosResponse<Result>>(tempConfig)
-        .then((res: AxiosResponse<Result>) => {
+        .request<any, AxiosResponse<Response>>(tempConfig)
+        .then((res: AxiosResponse<Response>) => {
           resolve((res as unknown) as Promise<T>)
         })
         .catch((e: Error | AxiosError) => {

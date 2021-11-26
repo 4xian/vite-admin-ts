@@ -2,17 +2,19 @@ import { defineStore } from 'pinia'
 import { getCookie, setCookie, removeCookie } from '@/utils/cookies'
 import { loginApi } from '@/api/user'
 import { store } from '@/store/index'
+import { Response } from '#/request'
+import { UserInfo, LoginResult } from '@/api/models/user'
 enum RoleItem {
   SUPER = 'super',
   TEST = 'test'
 }
 
-interface UserInfo {
+/* interface UserInfo {
   id?: string | number
   userName?: string
   avatar?: string
   roles?: string[]
-}
+} */
 
 interface UserState {
   userInfo: Partial<UserInfo>
@@ -48,22 +50,20 @@ export const useUserStore = defineStore({
     },
 
     resetState() {
-      //   this.userInfo = null
-      //   this.token = undefined
-      //   this.roles = []
       removeCookie('token')
       removeCookie('userInfo')
     },
 
     // 异步
-    async login(params: { userName: string; password: string }): Promise<UserInfo> {
+    async login(params: { userName: string; password: string }): Promise<Response<LoginResult>> {
       try {
-        // const userData = await loginApi(params)
-        // const { token } = userData
-        this.setToken('1')
-        this.setUserInfo({ userName: params.userName })
-        const info = this.getUserInfo || {}
-        return info
+        const userData = await loginApi(params)
+        const { data } = userData
+        if (data) {
+          this.setToken(data.token)
+          this.setUserInfo({ userName: data.userName })
+        }
+        return userData
       } catch (err) {
         return Promise.reject(err)
       }
