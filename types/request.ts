@@ -28,5 +28,5 @@ export enum ContentTypeEnum {
   // form-data
   WWW_FORM = 'application/x-www-form-urlencoded;charset=UTF-8',
   // from-data upload
-  FORM_DATA = 'application/form-data;charset=UTF-8'
+  FORM_DATA = 'multipart/form-data;'
 }

@@ -2,11 +2,11 @@
 <template>
   <div class="rich">
     <a-divider content-position="center">富文本demo</a-divider>
-    <div ref="richText" class="rich-item">
+    <!-- <div ref="richText" class="rich-item">
       <MinRichText ref="minRich" :init-value="text" @get-value="getValue"></MinRichText>
     </div>
     <a-button type="primary" @click="getHtml">提取html</a-button>
-    <a-divider>分割线</a-divider>
+    <a-divider>分割线</a-divider> -->
     <div class="rich-item-one">
       <MinRichText ref="minRichOne" :init-value="textOne" :config="richConfig" @get-value="getValueOne"></MinRichText>
     </div>
@@ -22,7 +22,8 @@ const textOne = ref()
 const minRich = ref()
 const minRichOne = ref()
 const richConfig = reactive({
-  height: 500
+  height: 500,
+  uploadImgMaxLength: 3
 })
 const getValue = (e: any) => {
   console.log('取值:', e)
@@ -41,7 +42,6 @@ const handleInit = () => {
     textOne.value = '另一个500高度的编辑器'
   }, 3000)
 }
-
 const getHtml = () => {
   console.log(minRich.value.html)
 }

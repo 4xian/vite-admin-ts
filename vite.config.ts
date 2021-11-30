@@ -56,7 +56,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       open: false,
       proxy: {
         '/api': {
-          target: 'http://admin.xueyueob.cn/api',
+          target: 'http://192.168.200.239/official/api',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp('^/api'), '')

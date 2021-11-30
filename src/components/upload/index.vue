@@ -35,6 +35,7 @@ import { propsData, OptionsType, FileItem, FileInfo } from './props'
 import { ref, reactive, unref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
+import { uploadImg } from '@/api/index'
 const props = defineProps(propsData)
 const emits = defineEmits(['finish'])
 
@@ -144,13 +145,63 @@ const formatList = (list: Partial<FileItem>[]) => {
     })
   ]
 }
+
+/* 手动上传 */
+const customUpload = () => {
+  return new Promise((resolve, reject) => {
+    if (unref(imgList).length) {
+      const pending = unref(imgList).filter((v) => v.originFileObj); // 待上传列表
+      const old = unref(imgList).filter((o) => o.url)
+      if (pending.length) {
+        Promise.all(
+          pending.map((v) => {
+            const formData = new FormData()
+            formData.append('file', v.originFileObj)
+            return new Promise((_resolve, _reject) => {
+              uploadImg(formData, {
+                fileType: '2',
+                menu: 'image'
+              })
+                .then((res) => {
+                  _resolve(res.data)
+                })
+                .catch((err) => {
+                  _reject(err)
+                })
+            })
+          })
+        )
+          .then((res) => {
+            const temp = res.map((f: any) => {
+              return {
+                name: '',
+                url: f.fileUrl,
+                uid: f.fileId
+              }
+            })
+            resolve([...old, ...temp])
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      } else {
+        resolve(old)
+      }
+    } else {
+      message.error('请先上传图片')
+      reject('请先上传图片')
+    }
+  })
+}
+
 /* 暴露列表给父组件 */
 const getFileList = () => {
   return formatList(unref(imgList))
 }
 
 defineExpose({
-  getFileList
+  getFileList,
+  customUpload
 })
 </script>
 <style lang="scss" scoped>

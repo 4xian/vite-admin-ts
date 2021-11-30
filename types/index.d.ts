@@ -20,4 +20,9 @@ declare global {
     /* interface Element extends VNode {}
     interface ElementClass extends Vue {} */
   }
+  declare type FileType = {
+    uid: string
+    fileId: string
+    fileUrl: string
+  }
 }

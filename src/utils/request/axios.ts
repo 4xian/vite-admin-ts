@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash-es'
 import { isString } from '../is'
 import axios from 'axios'
 import { message } from 'ant-design-vue'
+import { objToParams } from '../util'
 
 export class Request {
   private reqInstance: AxiosInstance
@@ -24,10 +25,10 @@ export class Request {
     // request
     this.reqInstance.interceptors.request.use(
       (config: AxiosRequestConfig) => {
-        const token = getCookie('token')
+        /* const token = getCookie('token')
         if (token && config.headers) {
           config.headers['Authorization'] = `Bearer ${token}`
-        }
+        } */
         return config
       },
       (err: AxiosError) => Promise.reject(err)
@@ -88,34 +89,26 @@ export class Request {
 
   private handleConfig(config: AxiosRequestConfig, options: ReqOptions): AxiosRequestConfig {
     const { prefix } = options
-
     if (prefix) {
       config.url = `${prefix}${config.url}`
     }
-    const params = config.params || {}
-    const data = config.data || {}
-    if (config.method?.toLowerCase() === RequestTypeEnum.GET) {
-      if (isString(params)) {
-        config['url'] = config.url + params
-        config.params = undefined
-      }
-      //   else {
-      // config["url"] = config.url + objToParams(config.params);
-      // console.log(config["url"]);
-      //   }
-    } else {
-      // 非GET
-      if (isString(params)) {
-        config.url = config.url + params
+    const params = config.params
+    if (params) {
+      if (config.method?.toLowerCase() === RequestTypeEnum.GET) {
+        if (params && isString(params)) {
+          config['url'] = config.url + params
+        } else {
+          config['url'] = config.url + objToParams(config.params)
+        }
         config.params = undefined
       } else {
-        if (Reflect.has(config, 'data') && Object.keys(config.data).length > 0) {
-          config.data = data
-          config.params = params
+        // 非GET
+        if (isString(params)) {
+          config.url = config.url + params
         } else {
-          config.data = params
-          config.params = undefined
+          config.url = config.url + objToParams(config.params)
         }
+        config.params = undefined
       }
     }
     return config
