@@ -1,4 +1,4 @@
 import userModules from './modules/user'
-import { rolesList } from './modules/system'
+import { rolesList, userList } from './modules/system'
 
-export default [...userModules, ...rolesList]
+export default [...userModules, ...rolesList, ...userList]

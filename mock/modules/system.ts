@@ -62,6 +62,7 @@ const users = (): SystemType.UserList[] => {
     arr.push(
       Mock.mock({
         userId: Random.integer(100, 10000),
+        userName: Random.cname(),
         roleName: '@permission',
         createTime: Random.date('yyyy-MM-dd HH:mm:ss'),
         updateTime: Random.date('yyyy-MM-dd HH:mm:ss'),
@@ -78,11 +79,15 @@ export const userList: MockMethod[] = [
     url: '/api/getUserList',
     method: 'get',
     statusCode: 200,
-    response: (): Response<SystemType.UserList[]> => {
+    response: ({ query }: any): Response<SystemType.UserList[]> => {
       return {
         code: 1,
         message: '获取成功',
-        data: users()
+        data: query.roleName
+          ? users().filter((v) => {
+            return v.roleName.includes(query.roleName)
+          })
+          : users()
       }
     }
   }

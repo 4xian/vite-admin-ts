@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-// import { toRefs } from 'vue'
 import { handlePermission, handleNotice } from '@/utils/auth'
 import MySvg from '@/components/svgIcon/index.vue'
 const props = defineProps({
@@ -42,5 +41,4 @@ const handleNestMenu = (v: any) => {
   }
   return false
 }
-// toRefs(props)
 </script>

@@ -1,12 +1,15 @@
 <template>
-  <div class="role-search">
+  <div class="user-search">
     <Button type="primary" @click="add">
       <template #icon><PlusOutlined /></template> 新增
     </Button>
     <div class="search-right">
-      <Form ref="formRef" :model="form" autocomplete="off">
-        <Form.Item label="角色名" name="roleName">
-          <Input v-model:value="form.roleName" placeholder="请输入角色名" />
+      <Form ref="formRef" layout="inline" :model="form" autocomplete="off">
+        <Form.Item label="用户名" name="name">
+          <Input v-model:value="form.name" placeholder="请输入用户名" />
+        </Form.Item>
+        <Form.Item label="角色名" name="role">
+          <Input v-model:value="form.role" placeholder="请输入角色名" />
         </Form.Item>
       </Form>
       <Button type="primary" :style="{ margin: '0 10px' }" @click="search(form)">
@@ -34,15 +37,16 @@ const props = withDefaults(defineProps<P>(), {
 })
 
 const form = reactive({
-  roleName: ''
+  name: '',
+  role: ''
 })
 const formRef = ref<HTMLElement | null>(null)
 </script>
 <style lang="scss" scoped>
-.role-search {
-  //   margin-bottom: 10px;
+.user-search {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 
   .search-right {
     display: flex;

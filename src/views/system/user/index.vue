@@ -7,21 +7,18 @@ import { Table, Button, Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import RoleForm from './form.vue'
 import useModalConfig from '@/hooks/useModalConfig'
-import { flatArray } from '@/utils/util'
-import { menuTreeList } from '@/utils/auth'
 import DetailItem from './detail.vue'
 import SearchItem from './search.vue'
 const KEY = 'userId'
 export default defineComponent({
   setup() {
     const formRef = ref<any>(null)
-    const dataSource = ref<Partial<SystemType.RoleList>[]>([])
+    const dataSource = ref<Partial<SystemType.UserList>[]>([])
     const isEdit = ref(false)
     const formModal = useModalConfig()
     const detailModal = useModalConfig()
-    const initValues = ref<Partial<SystemType.RoleList>>({})
-    const formatTree = ref<SystemType.PermissionType[]>(flatArray(menuTreeList))
-    const searchParams = reactive({ userName: '' })
+    const initValues = ref<Partial<SystemType.UserList>>({})
+    const searchParams = reactive({ userName: '', roleName: '' })
     const getList = () => {
       getUserList(searchParams)
         .then((res) => {
@@ -38,6 +35,11 @@ export default defineComponent({
         title: '用户名',
         align: 'center',
         dataIndex: 'userName'
+      },
+      {
+        title: '所属角色',
+        align: 'center',
+        dataIndex: 'roleName'
       },
       {
         title: '创建时间',
@@ -62,7 +64,7 @@ export default defineComponent({
               <Button type='primary' onClick={() => Interface.detail(record)} style={{ marginRight: '10px' }}>
                 详情
               </Button>
-              <Button danger onClick={() => Interface.delete(record.roleId)}>
+              <Button danger onClick={() => Interface.delete(record.userId)}>
                 删除
               </Button>
             </>
@@ -77,41 +79,53 @@ export default defineComponent({
 
     const handleSearch = (v: any) => {
       console.log(v)
-      searchParams.userName = v.roleName
+      searchParams.userName = v.name
+      searchParams.roleName = v.role
       getList()
     }
     const searchReset = (v: any) => {
       v.resetFields()
       searchParams.userName = ''
+      searchParams.roleName = ''
       getList()
+    }
+
+    // 分页配置
+    const pagesConfig = {
+      defaultPageSize: 5,
+      onChange(page: number, pageSize: number) {
+        console.log(page, pageSize)
+      }
     }
 
     // 接口操作
     class Interface {
       // 新增
       static add() {
-        formModal.setTitle('新增角色')
-        initValues.value = {}
+        formModal.setTitle('新增用户')
+        initValues.value = {
+          roleName: '超级管理员'
+        }
         formModal.setVisible(true)
         isEdit.value = false
       }
 
       // 编辑
-      static edit(v: SystemType.RoleList) {
+      static edit(v: SystemType.UserList) {
         initValues.value = {
           ...v
         }
         isEdit.value = true
-        formModal.setTitle('编辑角色')
+        formModal.setTitle('编辑用户')
         formModal.setVisible(true)
       }
 
       // 详情
-      static detail(v: SystemType.RoleList) {
+      static detail(v: SystemType.UserList) {
         initValues.value = {
           ...v
         }
-        detailModal.setTitle('角色详情')
+        detailModal.setTitle('用户详情')
         detailModal.setVisible(true)
       }
 
@@ -119,18 +133,9 @@ export default defineComponent({
       static submit() {
         console.log('submit')
         unref(formRef)
-          .roleRef.validate()
-          .then((res: Partial<SystemType.RoleList>) => {
+          .userRef.validate()
+          .then((res: Partial<SystemType.UserList>) => {
             console.log(res)
-            const tempAuth: string[] = []
-            res.permission?.forEach((v) => {
-              unref(formatTree).forEach((t) => {
-                if (v === t.key) {
-                  tempAuth.push(t.title)
-                }
-              })
-            })
-            console.log(tempAuth)
           })
           .catch((err: any) => {
             console.log(err)
@@ -187,7 +192,7 @@ export default defineComponent({
     return () => (
       <div>
         <SearchItem add={Interface.add} search={handleSearch} reset={searchReset} />
-        <Table columns={columns} rowKey={KEY} dataSource={unref(dataSource)} size='small' bordered></Table>
+        <Table columns={columns} rowKey={KEY} dataSource={unref(dataSource)} bordered pagination={pagesConfig}></Table>
         {FormModal()}
         {DetailModal()}
       </div>

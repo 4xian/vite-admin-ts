@@ -1,28 +1,32 @@
-<template>
-  <div class="app-wrap flex" :class="customClass">
-    <Sidebar />
-    <div class="app-contain">
-      <Navbar />
-      <TabsMenu />
-      <AppMain />
-    </div>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { computed } from 'vue'
+<script lang="tsx">
+import { computed, defineComponent } from 'vue'
 import { useLayoutSetting } from '@/store/modules/layout'
 import Sidebar from '@/layout/components/SideBar/index.vue'
 import Navbar from '@/layout/components/NavBar/index.vue'
 import TabsMenu from '@/layout/components/TabsMenu/index.vue'
 import AppMain from '@/layout/components/AppMain.vue'
-const layoutStore = useLayoutSetting()
-const status = computed(() => layoutStore.getSideStatus)
-const isMobile = computed(() => layoutStore.getMobileStatus)
-const customClass = computed(() => {
-  return {
-    hideMenu: !status.value,
-    mobile: isMobile.value
+
+export default defineComponent({
+  setup() {
+    const layoutStore = useLayoutSetting()
+    const status = computed(() => layoutStore.getSideStatus)
+    const isMobile = computed(() => layoutStore.getMobileStatus)
+    const customClass = computed(() => {
+      return {
+        hideMenu: !status.value,
+        mobile: isMobile.value
+      }
+    })
+    return () => (
+      <div class={['app-wrap flex', customClass]}>
+        <Sidebar />
+        <div class='app-contain'>
+          <Navbar />
+          <TabsMenu />
+          <AppMain />
+        </div>
+      </div>
+    )
   }
 })
 </script>

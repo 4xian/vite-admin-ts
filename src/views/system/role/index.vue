@@ -86,6 +86,14 @@ export default defineComponent({
       getList()
     }
 
+    // 分页配置
+    const pagesConfig = {
+      defaultPageSize: 5,
+      onChange(page: number, pageSize: number) {
+        console.log(page, pageSize)
+      }
+    }
+
     // 接口操作
     class Interface {
       // 新增
@@ -187,7 +195,7 @@ export default defineComponent({
     return () => (
       <div>
         <SearchItem add={Interface.add} search={handleSearch} reset={searchReset} />
-        <Table columns={columns} rowKey={KEY} dataSource={unref(dataSource)} size='small' bordered></Table>
+        <Table columns={columns} rowKey={KEY} dataSource={unref(dataSource)} bordered pagination={pagesConfig}></Table>
         {FormModal()}
         {DetailModal()}
       </div>

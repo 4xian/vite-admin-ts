@@ -1,28 +1,34 @@
 <template>
   <div class="role-detail">
-    <Descriptions bordered :column="1" :content-style="contentStyle">
-      <Descriptions.Item :label-style="{ width: '140px' }" label="角色名">
+    <Descriptions bordered :column="1" :label-style="labelStyle" :content-style="contentStyle">
+      <Descriptions.Item label="用户名">
+        {{ detail?.userName }}
+      </Descriptions.Item>
+      <Descriptions.Item label="角色名">
         {{ detail?.roleName }}
       </Descriptions.Item>
-      <Descriptions.Item :label-style="{ width: '140px' }" label="角色权限">
-        <Tree v-model:checkedKeys="permission" default-expand-all checkable :tree-data="menuTreeList"></Tree>
+      <Descriptions.Item label="密码">
+        {{ detail?.password }}
       </Descriptions.Item>
     </Descriptions>
   </div>
 </template>
 <script setup lang="ts">
 import { SystemType } from '#/system'
-import { menuTreeList } from '@/utils/auth'
-import { Descriptions, Tree } from 'ant-design-vue'
-import { ref, computed, CSSProperties } from 'vue'
+import { Descriptions } from 'ant-design-vue'
+import { computed, CSSProperties } from 'vue'
 const props = defineProps({
-  detail: Object as PropType<Partial<SystemType.RoleList>>
+  detail: Object as PropType<Partial<SystemType.UserList>>
 })
 
-const permission = ref(props.detail?.permission)
 const contentStyle = computed(
   (): CSSProperties => {
     return { display: 'flex', alignItems: 'center', justifyContent: 'center' }
+  }
+)
+const labelStyle = computed(
+  (): CSSProperties => {
+    return { width: '140px' }
   }
 )
 </script>

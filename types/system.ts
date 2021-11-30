@@ -30,5 +30,6 @@ export declare namespace SystemType {
   }
   type UserParamsType = {
     userName?: string
+    roleName?: string
   }
 }
