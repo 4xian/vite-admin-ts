@@ -1,5 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock'
 import { Random } from 'mockjs'
+import { superAuth, adminAuth, userAuth } from '@/utils/auth'
 const userList = [
   {
     username: 'admin',
@@ -49,6 +50,7 @@ const userMockList: MockMethod[] = [
           message: '登录成功',
           data: {
             userName,
+            permission: userName === 'super' ? superAuth : userName === 'admin' ? adminAuth : userAuth,
             token: new Date().getTime().toString(32)
           }
         }

@@ -3,6 +3,7 @@ export interface UserInfo {
   userName?: string
   avatar?: string
   roles?: string[]
+  permission: string[]
 }
 
 export interface UserId {
@@ -22,4 +23,5 @@ export interface LoginResult {
   userName: string
   token: string
   roles: string[]
+  permission: string[]
 }

@@ -30,7 +30,7 @@ export const nestedRouter = {
         title: '子菜单1-1',
         icon: 'menu'
       },
-      auth: '子菜单11',
+      auth: '子菜单1-1',
       component: () => import('@/views/menu/menu1.vue'),
       nested: true,
       children: [
@@ -42,7 +42,7 @@ export const nestedRouter = {
             title: '子菜单1-1-1',
             icon: 'menu'
           },
-          auth: '子菜单111'
+          auth: '子菜单1-1-1'
         },
         {
           path: '/menu1-1-2',
@@ -52,7 +52,7 @@ export const nestedRouter = {
             title: '子菜单1-1-2',
             icon: 'menu'
           },
-          auth: '子菜单111'
+          auth: '子菜单1-1-2'
         }
       ]
     }

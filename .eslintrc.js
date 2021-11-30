@@ -265,7 +265,7 @@ module.exports = {
     // 禁止使用不必要的嵌套块
     'no-lone-blocks': 2,
     // 不允许使用混合空格和制表符进行缩进
-    'no-mixed-spaces-and-tabs': 2,
+    'no-mixed-spaces-and-tabs': 0,
     // 禁止在逻辑表达式，条件表达式，声明，数组元素，对象属性，序列和函数参数周围使用多个空格
     'no-multi-spaces': 2,
     // 禁止使用斜线（\）进行换行
@@ -392,7 +392,7 @@ module.exports = {
       }
     ],
     // 禁止使用分号结尾
-    semi: [2, 'never'],
+    semi: [0, 'never'],
     // 分号后强制使用空格，并在分号前禁止使用空格
     'semi-spacing': [
       2,

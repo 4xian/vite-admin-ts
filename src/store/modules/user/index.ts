@@ -4,30 +4,18 @@ import { loginApi } from '@/api/user'
 import { store } from '@/store/index'
 import { Response } from '#/request'
 import { UserInfo, LoginResult } from '@/api/models/user'
-enum RoleItem {
-  SUPER = 'super',
-  TEST = 'test'
-}
-
-/* interface UserInfo {
-  id?: string | number
-  userName?: string
-  avatar?: string
-  roles?: string[]
-} */
-
+import { flatArray } from '@/utils/util'
+import { menuTreeList } from '@/utils/auth'
 interface UserState {
   userInfo: Partial<UserInfo>
   token?: string
-  roles: RoleItem[]
 }
 
 export const useUserStore = defineStore({
   id: 'user-info',
   state: (): UserState => ({
     userInfo: {},
-    token: undefined,
-    roles: []
+    token: undefined
   }),
 
   getters: {
@@ -60,8 +48,18 @@ export const useUserStore = defineStore({
         const userData = await loginApi(params)
         const { data } = userData
         if (data) {
+          console.log(data)
+
           this.setToken(data.token)
-          this.setUserInfo({ userName: data.userName })
+          const tempAuth: string[] = []
+          data.permission?.forEach((v) => {
+            flatArray(menuTreeList)?.forEach((t) => {
+              if (v === t.key) {
+                tempAuth.push(t.title)
+              }
+            })
+          })
+          this.setUserInfo({ userName: data.userName, permission: tempAuth })
         }
         return userData
       } catch (err) {

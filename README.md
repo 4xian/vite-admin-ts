@@ -1,6 +1,6 @@
 # vite-admin-ts
 
-🎉 基于 Vite 2.x + Vue 3.x + Vue-Router 4.x + Vuex 4.x + antd-design-vue + typescript 的后台管理系统
+🎉 基于 Vite 2.x + Vue 3.x(setup) + antd-design-vue + TS 的后台管理系统
 
 ## 开发
 
@@ -40,9 +40,7 @@ npm run lint:css
 
 ## 浏览器支持
 
-本地开发推荐使用`Chrome`浏览器,在火狐浏览器进行开发相对卡顿。
-
-支持现代浏览器, 不支持 IE
+本地开发推荐使用`Chrome`浏览器,不支持 IE
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
 |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
@@ -50,6 +48,4 @@ npm run lint:css
 
 更多浏览器可以查看 [Can I Use Es Module](https://caniuse.com/?search=ES%20Module)
 ## License
-
-
-Copyright (c)@Jian
+MIT

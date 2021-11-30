@@ -69,6 +69,23 @@ export const flatTree = (obj: any = {}, cid = 'children') => {
   return [...temp, { ...obj, [cid]: null }]
 }
 
+/* 扁平化数组 */
+export const flatArray = (arr: any[] = [], cid = 'children') => {
+  let result: any[] = []
+  const nest = (v: any) => {
+    if (v && v.length) {
+      v.forEach((e: any) => {
+        result = [...result, e]
+        if (e[cid] && e[cid].length) {
+          nest(e[cid])
+        }
+      })
+    }
+  }
+  nest(arr)
+  return result
+}
+
 /* 字符串格式化多分位 */
 export const formatSeparator = (v: string, num = 3, flag = ',') => {
   return v.replace(new RegExp(`\\d{1,${num}}(?=(\\d{${num}})+$)`, 'g'), (i) => i + flag)

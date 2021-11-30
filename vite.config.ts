@@ -64,7 +64,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       }
     },
     build: {
-      // sourcemap: true,
+      sourcemap: 'hidden',
       manifest: true,
       rollupOptions: {
         output: {
