@@ -21,25 +21,3 @@ export const loginApi = (params: LoginParams) => {
     params
   })
 }
-
-export function getSpinScreen(params: any) {
-  return http.get(
-    {
-      url: `/screen/rotateScreen`,
-      params
-    },
-    {
-      prefix
-    }
-  )
-}
-
-export function getWarningDetail(params: any) {
-  return http.get(
-    {
-      url: `/screen/alarmDetail`,
-      params
-    },
-    { prefix }
-  )
-}

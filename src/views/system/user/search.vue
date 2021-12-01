@@ -1,6 +1,6 @@
 <template>
   <div class="user-search">
-    <Button type="primary" @click="add">
+    <Button v-if="handlePermission('用户新增')" type="primary" @click="add">
       <template #icon><PlusOutlined /></template> 新增
     </Button>
     <div class="search-right">
@@ -25,6 +25,7 @@
 import { Button, Form, Input } from 'ant-design-vue'
 import { PlusOutlined, SearchOutlined, ReloadOutlined } from '@ant-design/icons-vue'
 import { withDefaults, reactive, ref, unref } from 'vue'
+import { handlePermission } from '@/utils/auth'
 interface P {
   add: () => void
   search: (v: any) => void
@@ -50,6 +51,8 @@ const formRef = ref<HTMLElement | null>(null)
 
   .search-right {
     display: flex;
+    flex: 1;
+    justify-content: flex-end;
   }
 }
 </style>

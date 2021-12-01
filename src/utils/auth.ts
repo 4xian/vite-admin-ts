@@ -56,12 +56,60 @@ export const menuTreeList: SystemType.PermissionType[] = [
       {
         title: '角色管理',
         key: 1010,
-        children: []
+        children: [
+          {
+            title: '角色增加',
+            key: 10100,
+            children: []
+          },
+          {
+            title: '角色详情',
+            key: 10101,
+            children: []
+          },
+          {
+            title: '角色编辑',
+            key: 10102,
+            children: []
+          },
+          {
+            title: '角色删除',
+            key: 10103,
+            children: []
+          }
+        ]
       },
       {
         title: '用户管理',
         key: 1011,
-        children: []
+        children: [
+          {
+            title: '用户管理',
+            key: 1011,
+            children: [
+              {
+                title: '用户增加',
+                key: 10110,
+                children: []
+              },
+              {
+                title: '用户详情',
+                key: 10111,
+                children: []
+              },
+              {
+                title: '用户编辑',
+                key: 10112,
+                children: []
+              },
+              {
+                title: '用户删除',
+                key: 10113,
+                children: []
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -126,7 +174,30 @@ export const menuTreeList: SystemType.PermissionType[] = [
 ]
 
 // 超级管理员权限
-export const superAuth = [102, 1020, 1021, 1022, 1023, 1024, 103, 1041, 1042, 10421, 100, 101, 1010, 1011]
+export const superAuth = [
+  102,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  103,
+  1041,
+  1042,
+  10421,
+  100,
+  101,
+  1010,
+  1011,
+  10100,
+  10101,
+  10102,
+  10103,
+  10110,
+  10111,
+  10112,
+  10113
+]
 // 管理员权限
 export const adminAuth = [102, 1020, 1021, 1022, 1023, 1024, 101, 1010, 1011, 100]
 // 普通用户权限

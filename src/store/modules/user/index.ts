@@ -20,10 +20,10 @@ export const useUserStore = defineStore({
 
   getters: {
     getUserInfo(): any {
-      return this.userInfo || getCookie('userInfo')
+      return getCookie('userInfo')
     },
     getToken(): string {
-      return this.token || getCookie('token') || ''
+      return getCookie('token') || ''
     }
   },
 
@@ -48,8 +48,6 @@ export const useUserStore = defineStore({
         const userData = await loginApi(params)
         const { data } = userData
         if (data) {
-          console.log(data)
-
           this.setToken(data.token)
           const tempAuth: string[] = []
           data.permission?.forEach((v) => {
@@ -75,4 +73,34 @@ export const useUserStore = defineStore({
 
 export function userUserStoreSetup() {
   return useUserStore(store)
+}
+
+const test = {
+  userName: 'super',
+  permission: [
+    '首页',
+    '关于',
+    '系统管理',
+    '用户管理',
+    '角色管理',
+    '菜单',
+    '子菜单',
+    '子菜单11',
+    '子菜单111',
+    '组件',
+    '无缝滚动',
+    '富文本',
+    '图片裁剪',
+    '数字滚动',
+    '图片上传',
+    '按钮权限',
+    '角色新增',
+    '角色编辑',
+    '角色详情',
+    '角色删除',
+    '用户新增',
+    '用户编辑',
+    '用户详情',
+    '用户删除'
+  ]
 }

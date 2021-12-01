@@ -30,7 +30,7 @@ const useRichText = (props: Props): any => {
       ctx.html = instance.txt.html() as string
     },
     customUploadImg: function (file: any, insertImgFn: any) {
-      const isLt10M = file[0].size / 1024 / 1024 < 2;
+      const isLt10M = file[0].size / 1024 / 1024 < 2
       const nameLength = file[0].name.length
       if (!isLt10M) {
         message.error('图片需小于2MB!')

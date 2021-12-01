@@ -150,7 +150,7 @@ const formatList = (list: Partial<FileItem>[]) => {
 const customUpload = () => {
   return new Promise((resolve, reject) => {
     if (unref(imgList).length) {
-      const pending = unref(imgList).filter((v) => v.originFileObj); // 待上传列表
+      const pending = unref(imgList).filter((v) => v.originFileObj) // 待上传列表
       const old = unref(imgList).filter((o) => o.url)
       if (pending.length) {
         Promise.all(

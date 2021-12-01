@@ -9,6 +9,7 @@ import RoleForm from './form.vue'
 import useModalConfig from '@/hooks/useModalConfig'
 import DetailItem from './detail.vue'
 import SearchItem from './search.vue'
+import { handlePermission } from '@/utils/auth'
 const KEY = 'userId'
 export default defineComponent({
   setup() {
@@ -58,15 +59,21 @@ export default defineComponent({
         customRender: ({ record }) => {
           return (
             <>
-              <Button type='primary' onClick={() => Interface.edit(record)} style={{ marginRight: '10px' }}>
-                编辑
-              </Button>
-              <Button type='primary' onClick={() => Interface.detail(record)} style={{ marginRight: '10px' }}>
-                详情
-              </Button>
-              <Button danger onClick={() => Interface.delete(record.userId)}>
-                删除
-              </Button>
+              {handlePermission('用户编辑') && (
+                <Button type='primary' onClick={() => Interface.edit(record)} style={{ marginRight: '10px' }}>
+                  编辑
+                </Button>
+              )}
+              {handlePermission('用户详情') && (
+                <Button type='primary' onClick={() => Interface.detail(record)} style={{ marginRight: '10px' }}>
+                  详情
+                </Button>
+              )}
+              {handlePermission('用户删除') && (
+                <Button danger onClick={() => Interface.delete(record.userId)}>
+                  删除
+                </Button>
+              )}
             </>
           )
         }

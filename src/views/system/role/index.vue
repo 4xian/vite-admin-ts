@@ -8,7 +8,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 import RoleForm from './form.vue'
 import useModalConfig from '@/hooks/useModalConfig'
 import { flatArray } from '@/utils/util'
-import { menuTreeList } from '@/utils/auth'
+import { menuTreeList, handlePermission } from '@/utils/auth'
 import DetailItem from './detail.vue'
 import SearchItem from './search.vue'
 const KEY = 'roleId'
@@ -56,15 +56,21 @@ export default defineComponent({
         customRender: ({ record }) => {
           return (
             <>
-              <Button type='primary' onClick={() => Interface.edit(record)} style={{ marginRight: '10px' }}>
-                编辑
-              </Button>
-              <Button type='primary' onClick={() => Interface.detail(record)} style={{ marginRight: '10px' }}>
-                详情
-              </Button>
-              <Button danger onClick={() => Interface.delete(record.roleId)}>
-                删除
-              </Button>
+              {handlePermission('角色编辑') && (
+                <Button type='primary' onClick={() => Interface.edit(record)} style={{ marginRight: '10px' }}>
+                  编辑
+                </Button>
+              )}
+              {handlePermission('角色详情') && (
+                <Button type='primary' onClick={() => Interface.detail(record)} style={{ marginRight: '10px' }}>
+                  详情
+                </Button>
+              )}
+              {handlePermission('角色删除') && (
+                <Button danger onClick={() => Interface.delete(record.roleId)}>
+                  删除
+                </Button>
+              )}
             </>
           )
         }
