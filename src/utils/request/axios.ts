@@ -87,6 +87,7 @@ export class Request {
     )
   }
 
+  //   merge config
   private handleConfig(config: AxiosRequestConfig, options: ReqOptions): AxiosRequestConfig {
     const { prefix } = options
     if (prefix) {

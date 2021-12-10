@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, unref } from 'vue'
 import { useLayoutSetting } from '@/store/modules/layout'
 import Sidebar from '@/layout/components/SideBar/index.vue'
 import Navbar from '@/layout/components/NavBar/index.vue'
@@ -18,7 +18,7 @@ export default defineComponent({
       }
     })
     return () => (
-      <div class={['app-wrap flex', customClass]}>
+      <div class={['app-wrap flex', unref(customClass)]}>
         <Sidebar />
         <div class='app-contain'>
           <Navbar />

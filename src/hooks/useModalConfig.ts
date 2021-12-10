@@ -1,4 +1,6 @@
 import { ref } from 'vue'
+
+/* 控制弹框标题和显隐 */
 export default function useModalConfig() {
   const visible = ref(false)
   const title = ref('新增')

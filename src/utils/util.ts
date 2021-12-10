@@ -6,6 +6,7 @@ const getQueryStringByName = function (name: string) {
   return result[1]
 }
 
+// 转为图片上传formData格式
 const transformData = function (data: any) {
   const params = new FormData()
   for (const item in data) {
@@ -14,6 +15,7 @@ const transformData = function (data: any) {
   return params
 }
 
+// 日期格式化
 const DateFormat = function (date: any, fmt: string) {
   fmt = fmt || 'yyyy-MM-dd hh:mm:ss'
   if (date === null || typeof date === 'undefined' || date === '') {
@@ -40,10 +42,8 @@ const DateFormat = function (date: any, fmt: string) {
   return fmt
 }
 
-export { getQueryStringByName, transformData, DateFormat }
-
 /* 对象转为params字符串拼接 */
-export function objToParams(obj: any): string {
+export function objToParams<T>(obj: T): string {
   let url = ''
   for (const [key, val] of Object.entries(obj)) {
     url += `&${key}=${encodeURIComponent(val as any)}`
@@ -90,3 +90,10 @@ export const flatArray = (arr: any[] = [], cid = 'children') => {
 export const formatSeparator = (v: string, num = 3, flag = ',') => {
   return v.replace(new RegExp(`\\d{1,${num}}(?=(\\d{${num}})+$)`, 'g'), (i) => i + flag)
 }
+
+// 获取随机图片(w:宽 h:高 type: 'jpg' | 'webp')
+export const getRandomImage = (w: string | number, h: string | number, type?: 'jpg' | 'webp') => {
+  return `https://picsum.photos/${w}/${h}${type ? '.' : ''}${type}?random=${new Date().getTime()}`
+}
+
+export { getQueryStringByName, transformData, DateFormat }

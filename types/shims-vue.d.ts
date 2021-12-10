@@ -3,6 +3,10 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+declare module '*.tsx' {
+  import Vue from 'compatible-vue'
+  export default Vue
+}
 
 declare module '*.svg'
 declare module '*.png'

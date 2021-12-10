@@ -64,16 +64,35 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       }
     },
     build: {
-      sourcemap: 'hidden',
-      manifest: true,
+      /* 搭配使用禁用console
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          // 生产环境移除console和debugger
+          drop_console: true,
+          drop_debugger: true
+        }
+      }, */
+      // 是否关闭打包计算
+      brotliSize: false,
+      sourcemap: false,
+      // 服务端使用
+      manifest: false,
+      // 自定义打包路径
+      // assetsDir: 'static/img/',
       rollupOptions: {
         output: {
           manualChunks: {
             vue: ['vue', 'vue-router', 'vuex']
             // 'element-plus': ['element-plus']
           }
+          /* 拆分打包 */
+          /* chunkFileNames: 'static/js/[name]-[hash].js',
+          entryFileNames: 'static/js/[name]-[hash].js',
+          assetFileNames: 'static/[ext]/[name]-[hash].[ext]' */
         }
       },
+      // 包大小提示阈值
       chunkSizeWarningLimit: 500
     }
   }

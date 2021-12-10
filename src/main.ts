@@ -9,8 +9,11 @@ import { store } from './store/index'
 import './permission'
 // svg register
 import 'virtual:svg-icons-register'
-const app = createApp(App)
+import autoRegisterComponents from '@/components/index'
 
+const app = createApp(App)
+// Automatically register global components
+autoRegisterComponents(app)
 app.use(router).use(store).mount('#app')
 
 export default app
