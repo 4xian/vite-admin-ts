@@ -8,6 +8,9 @@ $min-theme: #1890ff;
 $navbarHeight: 50px; //头部高度
 $customFontSize: 14px; // 主题字体大小
 $subFontSize: 12px; // 副标题字体大小
+$sidebarZIndex: 1001; // 侧边栏index层级
+$imagePreviewZIndex: 1002; // 图片预览modal显示层级
+
 :root {
   --sidebar-dark-bg: #001529; // 侧边栏dark主题背景色
   --sidebar-dark-color: rgba(255, 255, 255, 0.7); // 侧边栏dark主题字体颜色

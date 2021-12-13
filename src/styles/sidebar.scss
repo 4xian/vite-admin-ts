@@ -1,6 +1,6 @@
 #app {
   .sidebar-wrap {
-    z-index: 1001;
+    z-index: $sidebarZIndex;
     width: $sideWidth !important;
     height: 100%;
     // padding-top: $navbarHeight;

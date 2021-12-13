@@ -16,16 +16,6 @@ export const componentRouter = {
   redirect: '/components/gapless-scroll',
   children: [
     {
-      path: '/components/gapless-scroll',
-      name: 'ComponentsGaplessScroll',
-      component: () => import('@/views/components/gapless-scroll/index.vue'),
-      meta: {
-        title: '无缝滚动',
-        icon: 'gapless-scroll'
-      },
-      auth: '无缝滚动'
-    },
-    {
       path: '/components/rich-text',
       name: 'ComponentsRichText',
       component: () => import('@/views/components/richText/index.vue'),
@@ -36,14 +26,14 @@ export const componentRouter = {
       auth: '富文本'
     },
     {
-      path: '/components/crop-img',
-      name: 'ComponentsCropImg',
-      component: () => import('@/views/components/cropImg/index.vue'),
+      path: '/components/gapless-scroll',
+      name: 'ComponentsGaplessScroll',
+      component: () => import('@/views/components/gapless-scroll/index.vue'),
       meta: {
-        title: '图片裁剪',
-        icon: 'crop-img'
+        title: '无缝滚动',
+        icon: 'gapless-scroll'
       },
-      auth: '图片裁剪'
+      auth: '无缝滚动'
     },
     {
       path: '/components/count-scroll',
@@ -55,6 +45,7 @@ export const componentRouter = {
       },
       auth: '数字滚动'
     },
+
     {
       path: '/components/upload',
       name: 'ComponentsUpload',
@@ -64,6 +55,26 @@ export const componentRouter = {
         icon: 'upload'
       },
       auth: '图片上传'
+    },
+    {
+      path: '/components/image-preview',
+      name: 'ComponentsImagePreview',
+      component: () => import('@/views/components/image-preview/index.vue'),
+      meta: {
+        title: '图片预览',
+        icon: 'image-preview'
+      },
+      auth: '图片预览'
+    },
+    {
+      path: '/components/crop-img',
+      name: 'ComponentsCropImg',
+      component: () => import('@/views/components/cropImg/index.vue'),
+      meta: {
+        title: '图片裁剪',
+        icon: 'crop-img'
+      },
+      auth: '图片裁剪'
     }
   ]
 }

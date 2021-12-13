@@ -4,24 +4,6 @@ import { getCookie } from './cookies'
 import { SystemType } from '#/system'
 export const handlePermission = (v: string): boolean => {
   const auth = getCookie('userInfo').permission
-  /* const btn = ['按钮权限']
-  const menu = [
-    '首页',
-    '关于',
-    '系统管理',
-    '用户管理',
-    '角色管理',
-    '菜单',
-    '子菜单',
-    '子菜单11',
-    '子菜单111',
-    '组件',
-    '无缝滚动',
-    '富文本',
-    '图片裁剪',
-    '数字滚动',
-    '图片上传'
-  ] */
   return auth?.some((t: string) => t === v)
   //   return true;
 }
@@ -141,6 +123,11 @@ export const menuTreeList: SystemType.PermissionType[] = [
         title: '图片上传',
         key: 1024,
         children: []
+      },
+      {
+        title: '图片预览',
+        key: 1025,
+        children: []
       }
     ]
   },
@@ -180,6 +167,7 @@ export const superAuth = [
   1021,
   1022,
   1023,
+  1025,
   1024,
   103,
   1041,
@@ -199,9 +187,9 @@ export const superAuth = [
   10113
 ]
 // 管理员权限
-export const adminAuth = [102, 1020, 1021, 1022, 1023, 1024, 101, 1010, 1011, 100]
+export const adminAuth = [102, 1020, 1021, 1022, 1023, 1024, 1025, 101, 1010, 1011, 100]
 // 普通用户权限
-export const userAuth = [102, 1020, 1021, 1022, 1023, 1024, 100]
+export const userAuth = [102, 1020, 1021, 1022, 1023, 1024, 1025, 100]
 
 export const handleNotice = (v: string): number | null => {
   const obj = noticeList.find((t: any) => t.name === v)
