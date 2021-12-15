@@ -1,0 +1,127 @@
+.min-image {
+  position: relative;
+  overflow: hidden;
+
+  &-item {
+    cursor: pointer;
+  }
+
+  .image-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: $imagePreviewZIndex;
+    background: rgb(0 0 0 / 50%);
+    user-select: none;
+
+    &-preview {
+      z-index: $imagePreviewZIndex + 1;
+      transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+    }
+
+    .image-preview-close {
+      position: absolute;
+      top: 50px;
+      right: 50px;
+      z-index: $imagePreviewZIndex + 1;
+      cursor: pointer;
+
+      span {
+        padding: 10px;
+        background-color: rgb(0 0 0 / 10%);
+        border-radius: 50%;
+
+        &:hover {
+          transform: rotate(180deg);
+          transition: transform 0.5s ease-in;
+        }
+      }
+    }
+
+    .preview-util {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      z-index: $imagePreviewZIndex + 2;
+      width: 300px;
+      transform: translateX(-50%);
+
+      span {
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0 0 1px 1px #fff;
+        }
+      }
+
+      &-icon {
+        font-size: 30px;
+        color: rgb(255 255 255 / 50%);
+      }
+    }
+
+    .image-control {
+      &-left,
+      &-right {
+        position: absolute;
+        top: 50%;
+        z-index: $imagePreviewZIndex + 2;
+        transform: translateY(-50%);
+
+        span {
+          padding: 10px;
+          cursor: pointer;
+          background-color: rgb(0 0 0 / 10%);
+          border-radius: 50%;
+        }
+      }
+
+      &-left {
+        left: 50px;
+      }
+
+      &-right {
+        right: 50px;
+      }
+    }
+  }
+
+  .image-preview-box {
+    position: relative;
+    width: min-content;
+
+    .image-preview-item {
+      position: relative;
+      cursor: pointer;
+
+      &-eye {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+        transition: all 0.4s;
+      }
+
+      &:hover {
+        transition: all 0.4s;
+
+        .image-preview-item-eye {
+          opacity: 1;
+        }
+
+        &::before {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: rgba(0, 0, 0, 0.4);
+          content: '';
+        }
+      }
+    }
+  }
+}

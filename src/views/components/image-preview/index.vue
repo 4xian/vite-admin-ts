@@ -1,33 +1,54 @@
 <template>
   <div class="image-preview">
-    <img
-      v-for="(item, idx) in imgList"
-      :key="item"
-      class="image-preview-item"
-      :src="item"
-      alt=""
-      @click="handlePreview(idx)"
-    />
-    <ImagePreview
-      v-model:show="show"
-      :list="imgList"
-      :index="idx"
-      :click-mask-close="true"
-      @closeModal="close"
-      @activeIndex="handleActive"
-    />
-    <a-button type="primary" @click="preview">预览</a-button>
+    <a-divider content-position="center">图片预览demo</a-divider>
+    <div>
+      自定义插槽预览(需自定义预览显隐show与图片索引index)
+      <ImagePreview v-model:show="show" :index="idx" :list="imgList" src-name="url" :click-mask-close="false">
+        <img
+          v-for="(item, idx) in imgList"
+          :key="item.url"
+          class="image-preview-item"
+          :src="item.url"
+          alt=""
+          @click="handlePreview(idx)"
+        />
+      </ImagePreview>
+    </div>
+    <div>
+      默认图片预览(多图)
+      <ImagePreview
+        root-class="image-box-class"
+        image-class="image-item-class"
+        :list="imgList"
+        src-name="url"
+        :click-mask-close="false"
+      />
+    </div>
+    <div>
+      默认图片预览(单图)
+      <ImagePreview list="https://picsum.photos/320/180" :click-mask-close="false" />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import ImagePreview from '@/components/ImagePreview/index.vue'
 import { reactive, ref } from 'vue'
-const imgList = reactive<string[]>([
-  'https://picsum.photos/800/600',
-  'https://picsum.photos/600/400',
-  'https://picsum.photos/300/200',
-  'https://picsum.photos/300/400'
+const imgList = reactive<{ url: string }[]>([
+  {
+    url: 'https://picsum.photos/800/600'
+  },
+  {
+    url: 'https://picsum.photos/600/400'
+  },
+  {
+    url: 'https://picsum.photos/300/200'
+  },
+  {
+    url: 'https://picsum.photos/300/400'
+  }
 ])
+
+const defaultList = reactive<string[]>(['https://picsum.photos/320/180'])
 const show = ref(false)
 const idx = ref(0)
 
@@ -35,15 +56,6 @@ const handlePreview = (e: number) => {
   show.value = true
   idx.value = e
 }
-
-const handleActive = (e: number) => {
-  console.log(e)
-}
-
-const close = () => {
-  console.log(show.value)
-}
-
 const preview = () => {
   show.value = true
 }
@@ -52,6 +64,21 @@ const preview = () => {
 <style scoped lang="scss">
 .image-preview-item {
   position: relative;
+  width: 300px;
+  margin-right: 30px;
   cursor: pointer;
+
+  &:nth-last-of-type(1) {
+    margin-right: 0;
+  }
+}
+</style>
+<style>
+.image-box-class {
+  display: flex;
+}
+
+.image-item-class {
+  margin-right: 30px;
 }
 </style>

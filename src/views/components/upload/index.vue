@@ -1,7 +1,10 @@
 <template>
-  <div class="upload">
-    <MinUpload ref="uploadRef" :file-list="fileList" @finish="uploadFinish"></MinUpload>
-    <a-button @click="getImg">获取</a-button>
+  <div>
+    <a-divider content-position="center">图片上传demo</a-divider>
+    <div class="upload">
+      <MinUpload ref="uploadRef" :file-list="fileList" @finish="uploadFinish"></MinUpload>
+      <a-button @click="getImg">获取</a-button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

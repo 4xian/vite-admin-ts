@@ -1,15 +1,17 @@
 <script lang="tsx">
 import { defineComponent, reactive, ref, unref, CSSProperties, computed, watchEffect } from 'vue'
 import {
-  CloseCircleOutlined,
+  CloseOutlined,
   ZoomInOutlined,
   ZoomOutOutlined,
   UndoOutlined,
   RedoOutlined,
   ReloadOutlined,
   LeftOutlined,
-  RightOutlined
+  RightOutlined,
+  EyeOutlined
 } from '@ant-design/icons-vue'
+import { isString } from '@/utils/is'
 
 interface ImageOptions {
   scale: number
@@ -17,46 +19,78 @@ interface ImageOptions {
   show: boolean
   idx: number
   src: string
+  isHover: boolean
 }
 enum DIRECTION {
   LEFT = 'left',
   RIGHT = 'right'
 }
-
+/* props */
 const props = {
-  // 是否显示预览
+  // 预览图片数组
+  list: {
+    type: (null as unknown) as PropType<any[] | string>,
+    default: () => []
+  },
+  // 数组中图片src自定义字段名
+  srcName: {
+    type: String,
+    default: ''
+  },
+  // 点击遮罩层是否关闭预览
+  clickMaskClose: {
+    type: Boolean,
+    default: true
+  },
+
+  /* 1.自定义slot时生效 */
+  // 自定义slot时控制显隐预览
   show: {
     type: Boolean,
     default: false
-  },
-  // 预览图片数组
-  list: {
-    type: Array as PropType<string[]>,
-    default: () => []
   },
   // 当前图片索引
   index: {
     type: Number,
     default: 0
   },
-  // 点击遮罩层是否关闭预览
-  clickMaskClose: {
-    type: Boolean,
-    default: true
+
+  /* 2.默认时生效 */
+  // 图片width
+  width: {
+    type: [Number, String],
+    default: 300
+  },
+  // 图片height
+  height: {
+    type: [Number, String],
+    default: 200
+  },
+  // 自定义图片class
+  imageClass: {
+    type: String,
+    default: ''
+  },
+  // 自定义根class
+  rootClass: {
+    type: String,
+    default: ''
   }
 }
 
 export default defineComponent({
   name: 'ImagePreview',
+  inheritAttrs: false,
   props,
   emits: ['activeIndex', 'closeModal', 'update:show'],
-  setup(props, { emit }) {
+  setup(props, { emit, slots }) {
     const imageOptions = reactive<ImageOptions>({
       scale: 1,
       rotate: 0,
       show: false,
       idx: props.index,
-      src: ''
+      src: '',
+      isHover: false
     })
 
     const imageStyle = computed(
@@ -66,6 +100,27 @@ export default defineComponent({
         }
       }
     )
+
+    const imageItemStyle = computed(
+      (): CSSProperties => {
+        const { width, height } = props
+        return {
+          width: `${width}px`,
+          height: `${height}px`
+        }
+      }
+    )
+
+    const isShow = computed((): boolean => {
+      if (imageOptions.show) {
+        if (isString(props.list)) return Boolean(props.list)
+        return (props.list as []) && (props.list as []).length > 0
+      } else return false
+    })
+
+    const isSingleImage = computed((): boolean => isString(props.list))
+    const isMultiplyImage = computed((): boolean => !isString(props.list) && props.list.length > 1)
+
     const handleImageScale = (e: Event, v: number) => {
       e.stopPropagation()
       const flag = imageOptions.scale <= 0.4 && v < 0
@@ -80,8 +135,8 @@ export default defineComponent({
       imageOptions.rotate = flag ? 0 : imageOptions.rotate + v
     }
 
-    const resetImage = (e: Event) => {
-      e.stopPropagation()
+    const resetImage = (e?: Event) => {
+      e && e.stopPropagation()
       imageOptions.scale = 1
       imageOptions.rotate = 0
     }
@@ -92,17 +147,19 @@ export default defineComponent({
       emit('closeModal')
     }
 
-    const initPreview = () => {
-      const { index, show } = props
-      imageOptions.idx = index
-      imageOptions.src = props.list[index]
-      imageOptions.show = show
+    const initPreview = (slot: boolean, idx: number) => {
+      resetImage()
+      const { srcName, list } = props
+      imageOptions.idx = idx
+      imageOptions.src = unref(isSingleImage) ? list : srcName ? list[idx][srcName] : list[idx]
+      imageOptions.show = slot ? props.show : true
     }
 
     const handleControl = (e: Event, dir: string) => {
+      resetImage()
       e.stopPropagation()
       const { idx } = imageOptions
-      const { list } = props
+      const { list, srcName } = props
       if (dir === DIRECTION.LEFT) {
         imageOptions.idx -= 1
         if (idx <= 0) {
@@ -115,76 +172,101 @@ export default defineComponent({
         }
       }
       emit('activeIndex', imageOptions.idx)
-      imageOptions.src = props.list[imageOptions.idx]
+      imageOptions.src = unref(isSingleImage)
+        ? list
+        : srcName
+          ? list[imageOptions.idx][srcName]
+          : list[imageOptions.idx]
     }
 
     const handleClickMask = () => {
       if (props.clickMaskClose) handleClose()
     }
 
+    /* 点击预览 */
+    const handlePreview = (e: number) => {
+      initPreview(false, e)
+    }
     watchEffect(() => {
-      if (props.show) initPreview()
+      if (slots.default && props.show) initPreview(true, props.index)
     })
 
     /* 关闭 */
     const renderClose = (): JSX.Element => {
       return (
         <div class='image-preview-close'>
-          <CloseCircleOutlined title='关闭' style={{ fontSize: '30px', color: '#fff' }} onClick={() => handleClose()} />
+          <CloseOutlined title='关闭' style={{ fontSize: '20px', color: '#fff' }} onClick={() => handleClose()} />
         </div>
       )
     }
     /* 预览工具 */
     const renderUtils = (): JSX.Element => {
+      const utils = [
+        {
+          icon: UndoOutlined,
+          title: '左转',
+          onClick: handleImageRotate,
+          args: -90
+        },
+        {
+          icon: RedoOutlined,
+          title: '右转',
+          onClick: handleImageRotate,
+          args: 90
+        },
+        {
+          icon: ZoomInOutlined,
+          title: '放大',
+          onClick: handleImageScale,
+          args: 0.2
+        },
+        {
+          icon: ZoomOutOutlined,
+          title: '缩小',
+          onClick: handleImageScale,
+          args: -0.2
+        },
+        {
+          icon: ReloadOutlined,
+          title: '还原',
+          onClick: resetImage,
+          args: 0
+        }
+      ]
       return (
         <div class='preview-util justify-space-between'>
-          <UndoOutlined
-            title='左转'
-            style={{ fontSize: '30px', color: '#ffffff59' }}
-            onClick={(e) => handleImageRotate(e, -90)}
-          />
-          <RedoOutlined
-            title='右转'
-            style={{ fontSize: '30px', color: '#ffffff59' }}
-            onClick={(e) => handleImageRotate(e, 90)}
-          />
-          <ZoomInOutlined
-            title='放大'
-            style={{ fontSize: '30px', color: '#ffffff59' }}
-            onClick={(e) => handleImageScale(e, 0.2)}
-          />
-          <ZoomOutOutlined
-            title='缩小'
-            style={{ fontSize: '30px', color: '#ffffff59', marginRight: '20px' }}
-            onClick={(e) => handleImageScale(e, -0.2)}
-          />
-          <ReloadOutlined
-            title='还原'
-            style={{ fontSize: '30px', color: '#ffffff59' }}
-            onClick={(e) => resetImage(e)}
-          />
+          {utils.map(({ icon: SvgIcon, title, onClick, args }) => (
+            <SvgIcon class='preview-util-icon' title={title} onClick={(e) => onClick(e, args)} key={title} />
+          ))}
         </div>
       )
     }
     /* 左右控制 */
-    const renderControl = (): JSX.Element => {
+    const renderControl = (): JSX.Element | boolean => {
       return (
-        <div class='image-control justify-space-between'>
-          <div class='image-control-left' onClick={(e) => handleControl(e, DIRECTION.LEFT)}>
-            <LeftOutlined style={{ fontSize: '24px', color: '#E4E4E4' }} />
+        unref(isMultiplyImage) && (
+          <div class='image-control'>
+            <div class='image-control-left' onClick={(e) => handleControl(e, DIRECTION.LEFT)}>
+              <LeftOutlined style={{ fontSize: '20px', color: '#E4E4E4' }} />
+            </div>
+            <div class='image-control-right' onClick={(e) => handleControl(e, DIRECTION.RIGHT)}>
+              <RightOutlined style={{ fontSize: '20px', color: '#E4E4E4' }} />
+            </div>
           </div>
-          <div class='image-control-right' onClick={(e) => handleControl(e, DIRECTION.RIGHT)}>
-            <RightOutlined style={{ fontSize: '24px', color: '#E4E4E4' }} />
-          </div>
-        </div>
+        )
       )
     }
 
     const renderPreview = (): JSX.Element | boolean => {
       return (
-        imageOptions.show && (
+        unref(isShow) && (
           <div class='image-modal flex-center' onClick={() => handleClickMask()}>
-            <img src={imageOptions.src} style={unref(imageStyle)} />
+            <img
+              class='image-modal-preview'
+              src={imageOptions.src}
+              style={unref(imageStyle)}
+              onClick={(e) => e.stopPropagation()}
+            />
             {renderClose()}
             {renderUtils()}
             {renderControl()}
@@ -192,80 +274,57 @@ export default defineComponent({
         )
       )
     }
-
-    return () => {
-      return <div class='min-image'>{renderPreview()}</div>
+    /* 默认渲染 */
+    const renderDefaultImage = (): JSX.Element => {
+      const { srcName, imageClass, rootClass, list } = props
+      return (
+        <>
+          {!unref(isSingleImage) ? (
+            <div class={['image-preview-box', rootClass]}>
+              {(props.list as []).map((v: any, index: number) => (
+                <div class={['image-preview-item', imageClass]}>
+                  <img
+                    key={srcName ? v[srcName] : v}
+                    src={srcName ? v[srcName] : v}
+                    alt={v['alt']}
+                    style={unref(imageItemStyle)}
+                  />
+                  <EyeOutlined
+                    onClick={() => handlePreview(index)}
+                    class='image-preview-item-eye'
+                    title='预览'
+                    style={{ fontSize: '20px', color: '#E6E6E6' }}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div class={['image-preview-box', rootClass]}>
+              <div class={['image-preview-item', imageClass]}>
+                <img src={list as string} style={unref(imageItemStyle)} />
+                <EyeOutlined
+                  onClick={() => handlePreview(0)}
+                  class='image-preview-item-eye'
+                  title='预览'
+                  style={{ fontSize: '20px', color: '#E6E6E6' }}
+                />
+              </div>
+            </div>
+          )}
+        </>
+      )
     }
+
+    return () => (
+      <div class='min-image'>
+        {renderPreview()}
+        {slots.default ? slots.default() : renderDefaultImage()}
+      </div>
+    )
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.min-image {
-  position: relative;
-  overflow: hidden;
-
-  &-item {
-    cursor: pointer;
-  }
-
-  .image-modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: $imagePreviewZIndex;
-    background: rgb(0 0 0 / 50%);
-    user-select: none;
-
-    .image-preview-close {
-      position: absolute;
-      top: 50px;
-      right: 50px;
-      cursor: pointer;
-
-      span {
-        &:hover {
-          transform: rotate(180deg);
-          transition: transform 0.5s ease-in;
-        }
-      }
-    }
-
-    .preview-util {
-      position: absolute;
-      bottom: 50px;
-      left: 50%;
-      z-index: 5;
-      width: 300px;
-      transform: translateX(-50%);
-
-      span {
-        cursor: pointer;
-      }
-    }
-
-    .image-control {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      left: 0;
-      z-index: 5;
-      padding: 0 50px;
-      transform: translateY(-50%);
-      align-items: center;
-
-      span {
-        padding: 8px;
-        cursor: pointer;
-        border-radius: 50%;
-
-        &:hover {
-          background-color: #ffffff79;
-        }
-      }
-    }
-  }
-}
+@import './index.scss';
 </style>
