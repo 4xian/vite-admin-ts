@@ -7,8 +7,7 @@
           v-for="(v, idx) in defaultList"
           :key="`single-count-${idx}`"
           ref="singleRef"
-          class="single-count-item"
-          :class="[customClass]"
+          :class="['single-count-item', customClass]"
           :style="scrollHeight"
         >
           <div :style="filterStyle" :class="[{ 'count-debounce': isFinish }]">{{ v }}</div>
@@ -27,16 +26,16 @@
           :style="handleAllStyle(it)"
         >
           <div v-if="it === props.separator" :class="[separatorClass]">{{ it }}</div>
-          <div
-            v-for="v in defaultList"
-            v-else
-            ref="allItemRef"
-            :key="`all-count${v}`"
-            :class="[customClass]"
-            class="all-count-item"
-          >
-            <div :style="filterStyle" :class="[{ 'count-debounce': isFinish }]">{{ v }}</div>
-          </div>
+          <template v-else>
+            <div
+              v-for="v in defaultList"
+              ref="allItemRef"
+              :key="`all-count${v}`"
+              :class="['all-count-item', customClass]"
+            >
+              <div :style="filterStyle" :class="[{ 'count-debounce': isFinish }]">{{ v }}</div>
+            </div>
+          </template>
         </div>
         <slot name="suffix"></slot>
       </div>
@@ -44,7 +43,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, computed, CSSProperties, watch, nextTick, unref, onBeforeUnmount } from 'vue'
+import { CSSProperties } from 'vue'
 import { formatSeparator } from '@/utils/util'
 import { propsData } from './props'
 const props = defineProps(propsData)
@@ -117,6 +116,8 @@ const handleAllStyle = (idx: string): CSSProperties => {
 const singleInit = () => {
   reset()
   singleHeight.value = unref(singleRef)?.offsetHeight || 0
+  console.log(unref(singleRef))
+
   timer.value = new Date().getTime()
   singleScroll()
 }
@@ -125,6 +126,7 @@ const singleInit = () => {
 const allInit = () => {
   reset()
   singleHeight.value = unref(allItemRef)?.offsetHeight || 0
+  console.log(unref(allItemRef))
   allScroll()
 }
 
@@ -188,6 +190,13 @@ const allScroll = () => {
     }
   })
 }
+
+onMounted(() => {
+  nextTick(() => {
+    console.log(singleRef.value)
+    console.log(allItemRef.value)
+  })
+})
 
 watch(
   () => props.value,

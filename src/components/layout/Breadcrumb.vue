@@ -1,14 +1,14 @@
 <!-- 顶部面包屑 -->
 <template>
   <div v-if="crumbsStatus" class="min-breadcrumb" :class="{ isMobile: isMobile }">
-    <a-breadcrumb separator=" > ">
-      <a-breadcrumb-item
+    <Breadcrumb separator=" > ">
+      <BreadcrumbItem
         v-for="(v, idx) in routeList"
         :key="v.path"
       ><span v-if="idx === routeList.length">{{ v.meta.title }}</span>
         <router-link v-else :to="v.redirect || v.path">{{ v.meta.title }}</router-link>
-      </a-breadcrumb-item>
-    </a-breadcrumb>
+      </BreadcrumbItem>
+    </Breadcrumb>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { RouteLocationMatched } from 'vue-router'
 import { useLayoutSetting } from '@/store/modules/layout'
+import { Breadcrumb, BreadcrumbItem } from 'ant-design-vue'
 const layoutSetting = useLayoutSetting()
 const route = useRoute()
 const routeList = computed((): Pick<RouteLocationMatched, 'meta' | 'path' | 'redirect'>[] =>

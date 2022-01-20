@@ -2,7 +2,7 @@
   <div class="side-item">
     <!-- 带副菜单 -->
     <template v-if="handleNestMenu(item)">
-      <a-sub-menu :key="item.path" popup-class-name="custom-popper-class">
+      <SubMenu :key="item.path" popup-class-name="custom-popper-class">
         <template #icon>
           <MySvg v-if="item.meta.icon" :name="item.meta.icon" />
         </template>
@@ -13,22 +13,23 @@
         <template v-for="child in item.children" :key="child.path">
           <SideItem :item="child" :index="child.path" />
         </template>
-      </a-sub-menu>
+      </SubMenu>
     </template>
     <!-- 单个菜单 -->
     <template v-else>
-      <a-menu-item v-if="handlePermission(item.auth)" :key="item.path">
+      <MenuItem v-if="handlePermission(item.auth)" :key="item.path">
         <template #icon><MySvg v-if="item.meta.icon" :name="item.meta.icon" /> </template>
         <span>{{ item.meta.title }}</span>
         <span v-if="handleNotice(item.meta.title)" class="side-menu-notice">{{ handleNotice(item.meta.title) }}</span>
-      </a-menu-item>
+      </MenuItem>
     </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { handlePermission, handleNotice } from '@/utils/auth'
-import MySvg from '@/components/svgIcon/index.vue'
+import MySvg from '@/components/SvgIcon/index.vue'
+import { SubMenu, MenuItem } from 'ant-design-vue'
 const props = defineProps({
   item: {
     required: true,

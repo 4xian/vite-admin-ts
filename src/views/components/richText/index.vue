@@ -1,22 +1,23 @@
 <!-- 法一：使用自定义组件 -->
 <template>
   <div class="rich">
-    <a-divider content-position="center">富文本demo</a-divider>
+    <Divider content-position="center">富文本demo</Divider>
     <!-- <div ref="richText" class="rich-item">
       <MinRichText ref="minRich" :init-value="text" @get-value="getValue"></MinRichText>
     </div>
-    <a-button type="primary" @click="getHtml">提取html</a-button>
-    <a-divider>分割线</a-divider> -->
+    <Button type="primary" @click="getHtml">提取html</Button>
+    <Divider>分割线</Divider> -->
     <div class="rich-item-one">
       <MinRichText ref="minRichOne" :init-value="textOne" :config="richConfig" @get-value="getValueOne"></MinRichText>
     </div>
-    <a-button type="primary" @click="getHtmlOne">提取另一个html</a-button>
+    <Button type="primary" @click="getHtmlOne">提取另一个html</Button>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted, reactive } from 'vue'
 import MinRichText from '@/components/richText/index.vue'
+import { Divider, Button } from 'ant-design-vue'
 const text = ref()
 const textOne = ref()
 const minRich = ref()

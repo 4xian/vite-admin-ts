@@ -4,7 +4,7 @@
       <img src="@/assets/logo.png" alt="" />
       <span v-show="!isOpen" class="sidebar-top-title">Vite-TS-admin</span>
     </div> -->
-    <a-menu
+    <Menu
       v-model:selectedKeys="path.selectKeys"
       v-model:openKeys="path.openKeys"
       mode="inline"
@@ -14,7 +14,7 @@
       @openChange="menuChange"
     >
       <SidebarItem v-for="v in routerList" :key="v.path" :item="v"></SidebarItem>
-    </a-menu>
+    </Menu>
   </div>
 </template>
 <script setup lang="ts">
@@ -23,6 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 import SidebarItem from './SideItem.vue'
 import { constantRoute } from '@/router/modules'
 import { useLayoutSetting } from '@/store/modules/layout/index'
+import { Menu } from 'ant-design-vue'
 const layoutStore = useLayoutSetting()
 const route = useRoute()
 const router = useRouter()

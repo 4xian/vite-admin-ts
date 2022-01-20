@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     关于页面
-    <a-button v-if="handlePermission('按钮权限')" type="primary">按钮权限</a-button>
+    <Button v-if="handlePermission('按钮权限')" type="primary">按钮权限</Button>
     <Second />
     <Test />
     <Three />
@@ -10,5 +10,6 @@
 
 <script lang="ts" setup>
 import { handlePermission } from '@/utils/auth'
+import { Button } from 'ant-design-vue'
 </script>
 <style></style>

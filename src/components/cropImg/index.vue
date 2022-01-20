@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import Cropper from 'cropperjs'
 import 'cropperjs/dist/cropper.css'
-import { PropType, unref, onMounted, nextTick, CSSProperties, ref, reactive, computed } from 'vue'
+import { PropType, CSSProperties } from 'vue'
 type CropperType = Cropper.Options
 const props = defineProps({
   src: {

@@ -1,13 +1,13 @@
 <template>
   <div class="crop flex-column-center">
-    <a-divider content-position="center">图片裁剪demo</a-divider>
+    <Divider content-position="center">图片裁剪demo</Divider>
     <div class="crop-item align-center">
       <CropImg ref="cropRef" :src="src"></CropImg>
       <img :src="afterImg" style="max-width: 500px;" />
     </div>
     <div class="action">
-      <a-button type="primary" @click="instance?.reset()">重置</a-button>
-      <a-button type="primary" @click="cropFunc">裁剪</a-button>
+      <Button type="primary" @click="instance?.reset()">重置</Button>
+      <Button type="primary" @click="cropFunc">裁剪</Button>
     </div>
     <!-- <div>{{ imgInfo }}</div> -->
   </div>
@@ -16,6 +16,7 @@
 import CropImg from '@/components/cropImg/index.vue'
 import Cropper from 'cropperjs'
 import { ref, unref, nextTick, onMounted } from 'vue'
+import { Divider, Button } from 'ant-design-vue'
 // const src = ref('https://picsum.photos/500/400')
 const src = ref('https://i.picsum.photos/id/1059/500/400.jpg?hmac=jBBfjYMVw1EmeWsbTw7xZFDKJEz7sLpdAW9Q7zNXiRA')
 const cropRef = ref<any>(null)

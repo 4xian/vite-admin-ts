@@ -3,7 +3,7 @@
     <img class="min-login-logo" :class="{ hidelogo: !sideStatus }" src="@/assets/images/login.svg" alt="" />
     <div class="min-login-form flex-center">
       <div class="form-title">{{ SysTitle }}</div>
-      <a-form
+      <Form
         ref="loginRef"
         layout="horizontal"
         class="login-form"
@@ -11,16 +11,16 @@
         :rules="rules"
         :model="form"
       >
-        <a-form-item label="用户名" required name="userName">
-          <a-input v-model:value="form.userName" placeholder="请输入用户名" />
-        </a-form-item>
-        <a-form-item label="密码" required name="password">
-          <a-input-password v-model:value="form.password" placeholder="请输入密码" />
-        </a-form-item>
-        <a-form-item :wrapper-col="{ span: 20, offset: 4 }">
-          <a-button type="primary" @click="submit">登录</a-button>
-        </a-form-item>
-      </a-form>
+        <FormItem label="用户名" required name="userName">
+          <Input v-model:value="form.userName" placeholder="请输入用户名" />
+        </FormItem>
+        <FormItem label="密码" required name="password">
+          <InputPassword v-model:value="form.password" placeholder="请输入密码" />
+        </FormItem>
+        <FormItem :wrapper-col="{ span: 20, offset: 4 }">
+          <Button type="primary" @click="submit">登录</Button>
+        </FormItem>
+      </Form>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ import { useRouter } from 'vue-router'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 import { userUserStoreSetup } from '@/store/modules/user/index'
 import type { AxiosError } from 'axios'
-import { message } from 'ant-design-vue'
+import { message, Form, FormItem, Button, Input, InputPassword } from 'ant-design-vue'
 import { Response } from '#/request'
 import { LoginResult } from '@/api/models/user'
 interface FormType {

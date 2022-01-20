@@ -10,7 +10,7 @@ export const handlePermission = (v: string): boolean => {
 
 /* 侧边栏通知个数 */
 const noticeList = [
-  {
+  /* {
     name: '首页',
     total: 10
   },
@@ -21,7 +21,7 @@ const noticeList = [
   {
     name: '数字滚动',
     total: 99
-  }
+  } */
 ]
 
 // 侧边栏菜单树形数据

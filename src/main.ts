@@ -9,6 +9,7 @@ import { store } from './store/index'
 import './permission'
 // svg register
 import 'virtual:svg-icons-register'
+// import 'vue-global-api'
 import autoRegisterComponents from '@/components/index'
 
 const app = createApp(App)

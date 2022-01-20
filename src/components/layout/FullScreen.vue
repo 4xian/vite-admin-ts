@@ -1,19 +1,20 @@
 <!-- 全屏 -->
 <template>
-  <a-tooltip placement="bottom">
+  <Tooltip placement="bottom">
     <template #title>
       <span>全屏</span>
     </template>
     <span class="min-fullscreen" @click="handleToggle">
       <ExpandOutlined :style="{ fontSize: '16px' }" />
     </span>
-  </a-tooltip>
+  </Tooltip>
 </template>
 
 <script lang="ts" setup>
 import { useFullscreen } from '@vueuse/core'
 import { useLayoutSetting } from '@/store/modules/layout'
 import { ExpandOutlined } from '@ant-design/icons-vue'
+import { Tooltip } from 'ant-design-vue'
 const { toggle, isFullscreen } = useFullscreen()
 const store = useLayoutSetting()
 const handleToggle = () => {

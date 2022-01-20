@@ -1,35 +1,35 @@
 <!-- 头部右侧 -->
 <template>
   <div class="min-profile">
-    <a-dropdown :overlay-style="{ zIndex: 10001 }">
+    <Dropdown :overlay-style="{ zIndex: 10001 }">
       <div class="flex align-center">
         <img class="min-profile-info" src="@/assets/logo.png" alt="" />
         <span>{{ userName }}</span>
       </div>
       <template #overlay>
-        <a-menu>
-          <a-menu-item @click="$router.push('/')">
+        <Menu>
+          <MenuItem @click="$router.push('/')">
             <HomeOutlined />
             <span>首页</span>
-          </a-menu-item>
-          <a-menu-item @click="changePwd">
+          </MenuItem>
+          <MenuItem @click="changePwd">
             <WarningOutlined />
             <span>修改密码</span>
-          </a-menu-item>
-          <a-menu-item @click="logOut">
+          </MenuItem>
+          <MenuItem @click="logOut">
             <LogoutOutlined />
             <span>退出</span>
-          </a-menu-item>
-        </a-menu>
+          </MenuItem>
+        </Menu>
       </template>
-    </a-dropdown>
+    </Dropdown>
   </div>
 </template>
 <script setup lang="ts">
 import { createVNode } from 'vue'
 import { useRouter } from 'vue-router'
 import { userUserStoreSetup } from '@/store/modules/user/index'
-import { Modal, message } from 'ant-design-vue'
+import { Modal, message, Dropdown, MenuItem, Menu } from 'ant-design-vue'
 import { WarningOutlined, HomeOutlined, LogoutOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue'
 const userStore = userUserStoreSetup()
 const { userName } = userStore.getUserInfo

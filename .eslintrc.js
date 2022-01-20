@@ -22,7 +22,7 @@ module.exports = {
   },
   // eslint:recommended:表示引入eslint的核心功能，并且报告一些常见的共同错误。
   //   extends: ['plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended'],
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'vue-global-api'],
   /* rules: {
     'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/ban-ts-ignore': 'off',

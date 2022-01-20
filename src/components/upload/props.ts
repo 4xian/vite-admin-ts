@@ -6,7 +6,7 @@ export const propsData = {
     default: ''
   },
   fileList: {
-    type: Array as PropType<Array<Partial<FileItem>>>,
+    type: Array as PropType<Array<FileItem>>,
     required: true,
     default: []
   },
@@ -56,13 +56,13 @@ export const style: CssType = {
 
 export interface FileItem {
   uid: string
-  name?: string
+  name: string
   status?: string
   response?: string
   url?: string
   type?: string
-  size: number
-  originFileObj: any
+  size?: number
+  originFileObj?: any
 }
 
 export interface FileInfo {

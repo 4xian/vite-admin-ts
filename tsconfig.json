@@ -4,7 +4,7 @@
     "module": "esnext",
     "lib": ["esnext", "dom"],
     "jsx": "preserve",
-    "allowJs": false,
+    "allowJs": true,
     "baseUrl": "./",
     "outDir": "./",
     "rootDir": "./",
@@ -36,7 +36,8 @@
     "types/**/*.ts",
     "mock/**/*.ts",
     "tests/**/*.ts",
-    "vite.config.ts"
+    "vite.config.ts",
+    "components.d.ts"
   ],
   "exclude": ["node_modules", "docs", "dist", "**/*.js"]
 }

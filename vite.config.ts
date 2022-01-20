@@ -1,12 +1,23 @@
 import { UserConfigExport, ConfigEnv } from 'vite'
-import { viteMockServe } from 'vite-plugin-mock'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
-// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+// import ViteComponents, { AntDesignVueResolver,AntDesignVueResolverOptions } from 'vite-plugin-components'
+
+// 按需导入组件样式(组件仍需手动导入)
+import vitePluginImp from 'vite-plugin-imp'
+// svg自定义配置
 import viteSvgIcons from 'vite-plugin-svg-icons'
+// setup组件名扩展
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
+// mockjs配置
+import { viteMockServe } from 'vite-plugin-mock'
+
+// 自动导入vue API
+import AutoImport from 'unplugin-auto-import/vite'
+
 export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
@@ -15,27 +26,46 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       vueJsx(),
-      //   svgLoader(),
+
+      // ui组件库注册
       /* Components({
-        resolvers: [ElementPlusResolver()]
+        // ui库解析器
+        resolvers: [AntDesignVueResolver()],
+        directoryAsNamespace: true,
+        // 生成components.d.ts地址
+        dts: false,
+        extensions: ['vue'],
+        // include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+        exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /[\\/]\.nuxt[\\/]/]
       }), */
-      ViteComponents({
+      /* ViteComponents({
         customComponentResolvers: [AntDesignVueResolver()]
-      }),
+      }), */
+      //   vitePluginImp(),
+
+      // mock.js配置
       viteMockServe({
         supportTs: true,
-        mockPath: 'mock',
+        mockPath: './src/mocks',
         localEnabled: command === 'serve',
         prodEnabled: command !== 'serve',
         injectCode: `
-          import { setupProdMockServer } from './mockProdServer';
-          setupProdMockServer();
+          import { setupMockConfig } from './src/mockConfig';
+          setupMockConfig();
         `
       }),
       // svg配置
       viteSvgIcons({
         iconDirs: [resolve(root, 'src/assets/svg')],
         symbolId: 'svg-[dir]-[name]'
+      }),
+      // setup组件名扩展 (使用时直接在script上定义name)
+      VueSetupExtend(),
+
+      // 自动导入包API
+      AutoImport({
+        imports: ['vue', 'vue-router', '@vueuse/core'],
+        dts: 'src/auto-imports.d.ts'
       })
     ],
     resolve: {

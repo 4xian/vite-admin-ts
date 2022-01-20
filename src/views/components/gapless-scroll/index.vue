@@ -1,7 +1,7 @@
 <template>
   <div class="demo-gapless-scroll">
     <div class="scroll-title">
-      <a-divider content-position="center">无缝滚动demo</a-divider>
+      <Divider content-position="center">无缝滚动demo</Divider>
     </div>
     <div class="scroll flex-center">
       <GaplessScroll :width="200" :height="236" :options="options" :data="list" @activeIndex="activeIndex">
@@ -27,6 +27,7 @@
 import GaplessScroll from '@/components/gapless-scroll/index.vue'
 import { ref, reactive, computed } from 'vue'
 import { ScrollOptions } from '@/components/gapless-scroll/type'
+import { Divider } from 'ant-design-vue'
 import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
 
 const list = reactive([

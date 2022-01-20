@@ -17,29 +17,29 @@
       </router-link>
     </div>
     <div class="tabmenu-right">
-      <a-dropdown :overlay-style="{ zIndex: 10001 }">
+      <Dropdown :overlay-style="{ zIndex: 10001 }">
         <DownOutlined />
         <template #overlay>
-          <a-menu>
-            <a-menu-item>
+          <Menu>
+            <MenuItem>
               <ReloadOutlined />
               <span @click="refresh()">刷新页面</span>
-            </a-menu-item>
-            <a-menu-item>
+            </MenuItem>
+            <MenuItem>
               <DeleteRowOutlined />
               <span @click="closeTab(1, route)">关闭当前页</span>
-            </a-menu-item>
-            <a-menu-item>
+            </MenuItem>
+            <MenuItem>
               <EllipsisOutlined />
               <span @click="closeTab(2)">关闭其他页</span>
-            </a-menu-item>
-            <a-menu-item>
+            </MenuItem>
+            <MenuItem>
               <CloseOutlined />
               <span @click="closeTab(0)">关闭所有</span>
-            </a-menu-item>
-          </a-menu>
+            </MenuItem>
+          </Menu>
         </template>
-      </a-dropdown>
+      </Dropdown>
     </div>
   </div>
 </template>
@@ -50,7 +50,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useLayoutSetting } from '@/store/modules/layout/index'
 import { TabMenuType } from '#/layout'
 import { CloseOutlined, DownOutlined, ReloadOutlined, DeleteRowOutlined, EllipsisOutlined } from '@ant-design/icons-vue'
-import { message } from 'ant-design-vue'
+import { message, Dropdown, Menu, MenuItem } from 'ant-design-vue'
 const layoutStore = useLayoutSetting()
 const route = useRoute()
 const router = useRouter()

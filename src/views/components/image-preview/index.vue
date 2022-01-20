@@ -1,6 +1,6 @@
 <template>
   <div class="image-preview">
-    <a-divider content-position="center">图片预览demo</a-divider>
+    <Divider content-position="center">图片预览demo</Divider>
     <div>
       自定义插槽预览(需自定义预览显隐show与图片索引index)
       <ImagePreview v-model:show="show" :index="idx" :list="imgList" src-name="url" :click-mask-close="false">
@@ -32,6 +32,7 @@
 </template>
 <script lang="ts" setup>
 import ImagePreview from '@/components/ImagePreview/index.vue'
+import { Divider } from 'ant-design-vue'
 import { reactive, ref } from 'vue'
 const imgList = reactive<{ url: string }[]>([
   {

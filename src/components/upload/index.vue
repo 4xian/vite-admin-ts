@@ -1,6 +1,6 @@
 <template>
   <div class="min-upload">
-    <a-upload
+    <Upload
       :class="[customClass]"
       :action="action"
       :before-upload="beforeUpload"
@@ -13,20 +13,20 @@
       @change="fileChange"
     >
       <template v-if="listType === 'picture-card'">
-        <a-tooltip placement="topLeft" :title="`限制 ${max} 张，${tip}`">
+        <Tooltip placement="topLeft" :title="`限制 ${max} 张，${tip}`">
           <PlusOutlined />
           <div style="margin-top: 8px;">{{ text }}</div>
-        </a-tooltip>
+        </Tooltip>
       </template>
       <template v-else>
-        <a-tooltip placement="topLeft" :title="`限制 ${max} 张，${tip}`">
-          <a-button>
+        <Tooltip placement="topLeft" :title="`限制 ${max} 张，${tip}`">
+          <Button>
             <template #icon><PlusOutlined /></template>
             {{ text }}
-          </a-button>
-        </a-tooltip>
+          </Button>
+        </Tooltip>
       </template>
-    </a-upload>
+    </Upload>
   </div>
 </template>
 
@@ -34,7 +34,7 @@
 import { propsData, OptionsType, FileItem, FileInfo } from './props'
 import { ref, reactive, unref } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
-import { message } from 'ant-design-vue'
+import { message, Tooltip, Upload, Button } from 'ant-design-vue'
 import { uploadImg } from '@/api/index'
 const props = defineProps(propsData)
 const emits = defineEmits(['finish'])
@@ -69,11 +69,11 @@ const initOptions: OptionsType = {
 const mergeOptions = reactive<OptionsType>({ ...initOptions, ...props.options })
 const { accept, action, listType, multiple, disabled, width, size, immediate, length, text, tip, max } = mergeOptions
 const uploadwidth = ref(`${width}px`) // 图片宽高
-const imgList = ref<Partial<FileItem>[]>(props.fileList) // 文件列表
+const imgList = ref<FileItem[]>(props.fileList) // 文件列表
 
 /* 上传之前拦截 */
 const beforeUpload = (file: FileItem) => {
-  const isLimit = file.size / 1024 / 1024 < size
+  const isLimit = (file.size as number) / 1024 / 1024 < size
   const nameLimit = file.name ? file.name.length : 0
   if (!isLimit) {
     message.error(`图片需小于${size}mb`)
@@ -86,17 +86,17 @@ const beforeUpload = (file: FileItem) => {
 }
 
 /* change事件 */
-const fileChange = (e: FileInfo) => {
+const fileChange = (e: any) => {
   if (!validFile(e.file.size, e.file.name)) {
     // 剔除不符合选项的图片
-    const id = e.fileList.findIndex((t) => t.uid === e.file.uid)
+    const id = e.fileList.findIndex((t: any) => t.uid === e.file.uid)
     e.fileList.splice(id, 1)
     imgList.value = e.fileList
   } else {
     imgList.value = e.fileList.slice(-max)
   }
   if (immediate) {
-    const done = e.fileList.filter((f) => f.status === 'done')
+    const done = e.fileList.filter((f: any) => f.status === 'done')
     const flag =
       max === 1 ? e.file.status === 'done' : done && done.length === e.fileList.length - props.fileList.length
     if (flag) {
@@ -106,7 +106,7 @@ const fileChange = (e: FileInfo) => {
     }
     if (e.file.status === 'error') {
       message.error('上传出错，请重试!')
-      const idx = e.fileList.findIndex((t) => t.status === 'error')
+      const idx = e.fileList.findIndex((t: any) => t.status === 'error')
       e.fileList.splice(idx, 1)
       imgList.value = e.fileList
     }

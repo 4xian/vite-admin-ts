@@ -12,20 +12,24 @@ git clone https://github.com/4xian/vite-admin-ts.git
 cd vite-admin-ts
 
 # 安装依赖
-npm install
+yarn(推荐)
+或 npm install
 
 # taobao 源解决下载速度慢的问题
 npm config set registry https://registry.npm.taobao.org/
 
 # 启动服务
-npm run dev
+yarn dev
+或 npm run dev
+
 ```
 
 ## 发布
 
 ```bash
 # 构建生产环境
-npm run build
+yarn build
+或 npm run build
 ```
 
 ## 其它
