@@ -50,7 +50,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         localEnabled: command === 'serve',
         prodEnabled: command !== 'serve',
         injectCode: `
-          import { setupMockConfig } from './src/mockConfig';
+          import { setupMockConfig } from '@/mockConfig';
           setupMockConfig();
         `
       }),

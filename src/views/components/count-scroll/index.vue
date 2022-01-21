@@ -14,7 +14,7 @@
       </template>
     </div>
     <div>
-      <Button type="primary" @click="change">类型一：随机数字</Button>
+      <Button type="primary" @click="change">类型一: 随机数字</Button>
     </div>
     <!-- 多数字一起滚动 -->
     <div class="single-count flex">
@@ -34,13 +34,12 @@
       </MinCountScroll>
     </div>
     <div>
-      <Button type="primary" @click="changeTwo">类型二：切换数字</Button>
+      <Button type="primary" @click="changeTwo">类型二: 切换数字</Button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import MinCountScroll from '@/components/count-scroll/index.vue'
 import { formatSeparator } from '@/utils/util'
 import { Button } from 'ant-design-vue'
