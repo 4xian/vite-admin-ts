@@ -22,7 +22,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
     root,
-    base: command === 'serve' ? '/' : '/vite-admin-ts/',
+    base: command === 'serve' ? '/' : './',
     plugins: [
       vue(),
       vueJsx(),
@@ -46,7 +46,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       // mock.js配置
       viteMockServe({
         supportTs: true,
-        mockPath: './src/mocks',
+        mockPath: '@/mocks',
         localEnabled: command === 'serve',
         prodEnabled: command !== 'serve',
         injectCode: `
@@ -107,7 +107,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       brotliSize: false,
       sourcemap: false,
       // 服务端使用
-      manifest: false,
+      manifest: true,
       // 自定义打包路径
       // assetsDir: 'static/img/',
       rollupOptions: {
