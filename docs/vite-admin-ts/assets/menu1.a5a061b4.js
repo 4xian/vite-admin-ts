@@ -1,0 +1,1 @@
+import{_ as e}from"./index.564b0e9e.js";import{x as r,y as n}from"./vue.a14bd6b6.js";import"./element-plus.b853e53f.js";const t={};function o(s,c){return r(),n("div",null,"\u83DC\u53551111")}var f=e(t,[["render",o]]);export{f as default};

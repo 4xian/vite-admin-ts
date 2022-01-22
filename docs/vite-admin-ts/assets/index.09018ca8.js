@@ -1,0 +1,1 @@
+import{_ as e}from"./index.2988f909.js";import{x as r,y as s}from"./vue.a14bd6b6.js";import"./element-plus.b853e53f.js";const o={},t={class:"role-warp"};function c(n,a){return r(),s("div",t,"\u89D2\u8272\u7BA1\u740611")}var d=e(o,[["render",c]]);export{d as default};
