@@ -7,7 +7,16 @@ const userMockList: MockMethod[] = [
     timeout: 1000,
     statusCode: 200,
     response: ({ body }: any) => {
-      const { userName, password } = body
+      return {
+        code: 1,
+        message: '登录成功',
+        data: {
+          userName: 'super',
+          permission: superAuth,
+          token: new Date().getTime().toString(32)
+        }
+      }
+      /* const { userName, password } = body
       if (password === '123456') {
         return {
           code: 1,
@@ -24,7 +33,7 @@ const userMockList: MockMethod[] = [
           message: '密码错误',
           data: null
         }
-      }
+      } */
     }
   },
   {

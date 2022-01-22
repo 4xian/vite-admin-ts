@@ -201,7 +201,14 @@ export default defineComponent({
     return () => (
       <div>
         <SearchItem add={Interface.add} search={handleSearch} reset={searchReset} />
-        <Table columns={columns} rowKey={KEY} dataSource={unref(dataSource)} bordered pagination={pagesConfig}></Table>
+        <Table
+          columns={columns}
+          rowKey={KEY}
+          dataSource={unref(dataSource)}
+          bordered
+          pagination={pagesConfig}
+          size='small'
+        ></Table>
         {FormModal()}
         {DetailModal()}
       </div>

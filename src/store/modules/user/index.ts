@@ -20,21 +20,21 @@ export const useUserStore = defineStore({
 
   getters: {
     getUserInfo(): any {
-      return getCookie('userInfo')
+      return getCookie('userInfo', true)
     },
     getToken(): string {
-      return getCookie('token') || ''
+      return getCookie('token', true) || ''
     }
   },
 
   actions: {
     setToken(t: string) {
       this.token = t || ''
-      setCookie('token', t)
+      setCookie('token', t, true)
     },
     setUserInfo(v: Partial<UserInfo>) {
       this.userInfo = v
-      setCookie('userInfo', v as string)
+      setCookie('userInfo', v as string, true)
     },
 
     resetState() {

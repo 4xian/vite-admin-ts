@@ -7,7 +7,7 @@ const allConstantRoute = [...whiteRouter, ...constantRoute]
 const asyncRouter = []
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/vite-admin-ts/'),
   routes: allConstantRoute
 })
 

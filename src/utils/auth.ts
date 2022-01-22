@@ -3,7 +3,9 @@
 import { getCookie } from './cookies'
 import { SystemType } from '#/system'
 export const handlePermission = (v: string): boolean => {
-  const auth = getCookie('userInfo').permission
+  const auth = getCookie('userInfo', true).permission
+  console.log(getCookie('userInfo', true))
+
   return auth?.some((t: string) => t === v)
   //   return true;
 }
@@ -40,7 +42,7 @@ export const menuTreeList: SystemType.PermissionType[] = [
         key: 1010,
         children: [
           {
-            title: '角色增加',
+            title: '角色新增',
             key: 10100,
             children: []
           },
@@ -170,6 +172,7 @@ export const superAuth = [
   1025,
   1024,
   103,
+  104,
   1041,
   1042,
   10421,
