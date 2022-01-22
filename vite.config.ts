@@ -22,7 +22,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
     root,
-    base: command === 'serve' ? '/' : '/',
+    base: command === 'serve' ? '/' : '/vite-admin-ts',
     plugins: [
       vue(),
       vueJsx(),
@@ -94,7 +94,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       }
     },
     build: {
-      /* 搭配使用禁用console
+      // 搭配使用禁用console
       minify: 'terser',
       terserOptions: {
         compress: {
@@ -102,7 +102,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
           drop_console: true,
           drop_debugger: true
         }
-      }, */
+      },
       // 是否关闭打包计算
       brotliSize: false,
       sourcemap: false,

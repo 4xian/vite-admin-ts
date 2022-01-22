@@ -1,0 +1,1 @@
+import{_ as s}from"./index.a9d370ef.js";import{l as a,p as d,O as e,Q as o}from"./vue.c50f9232.js";const t={class:"index"};var f=s(a({setup:s=>(d((()=>{})),(s,a)=>(e(),o("div",t,"首页")))}),[["__scopeId","data-v-6df421c0"]]);export{f as default};
