@@ -96,4 +96,15 @@ export const getRandomImage = (w: string | number, h: string | number, type?: 'j
   return `https://picsum.photos/${w}/${h}${type ? '.' : ''}${type}?random=${new Date().getTime()}`
 }
 
+/* 模拟sleep
+    await sleepFn(1000)
+*/
+export const sleepFn = (t: number = 1000) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true)
+    }, t)
+  })
+}
+
 export { getQueryStringByName, transformData, DateFormat }

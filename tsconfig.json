@@ -37,7 +37,7 @@
     "mock/**/*.ts",
     "tests/**/*.ts",
     "vite.config.ts",
-    "components.d.ts"
+    "auto-import.d.ts"
   ],
   "exclude": ["node_modules", "docs", "dist", "**/*.js"]
 }

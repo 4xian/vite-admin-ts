@@ -17,7 +17,18 @@ export const useUserStore = defineStore({
     userInfo: {},
     token: undefined
   }),
-
+  // 开启数据缓存(默认存在sessionStorage，store的id作为key，state的内容作为value)
+  /* persist: {
+    enabled: true,
+    // 自定义缓存字段key，缓存位置，指定缓存的字段
+    strategies: [
+      {
+        key: 'custom-user',
+        storage: localStorage,
+        paths: ['token']
+      }
+    ]
+  }, */
   getters: {
     getUserInfo(): any {
       return getCookie('userInfo', true)

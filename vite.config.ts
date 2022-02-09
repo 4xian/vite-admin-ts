@@ -2,8 +2,8 @@ import { UserConfigExport, ConfigEnv } from 'vite'
 import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Components from 'unplugin-vue-components/vite'
-import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+// import Components from 'unplugin-vue-components/vite'
+// import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 // import ViteComponents, { AntDesignVueResolver,AntDesignVueResolverOptions } from 'vite-plugin-components'
 
 // 按需导入组件样式(组件仍需手动导入)
@@ -18,10 +18,17 @@ import { viteMockServe } from 'vite-plugin-mock'
 // 自动导入vue API
 import AutoImport from 'unplugin-auto-import/vite'
 
+// 开启gzip
+import viteCompression from 'vite-plugin-compression'
+
+// 各文件关系图谱检查
+import Inspect from 'vite-plugin-inspect'
+
 export default ({ command }: ConfigEnv): UserConfigExport => {
   const root = process.cwd()
   return {
     root,
+    // 开发环境:serve  生产环境:build
     base: command === 'serve' ? '/' : '/vite-admin-ts',
     plugins: [
       vue(),
@@ -46,7 +53,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       // mock.js配置
       viteMockServe({
         supportTs: true,
-        mockPath: '@/mocks',
+        mockPath: '/src/mocks',
         localEnabled: command === 'serve',
         prodEnabled: command !== 'serve',
         injectCode: `
@@ -66,9 +73,26 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       AutoImport({
         imports: ['vue', 'vue-router', '@vueuse/core'],
         dts: 'src/auto-imports.d.ts'
-      })
+      }),
+
+      // gzip 生成环境生成.gz文件
+      viteCompression({
+        // 是否在控制台输出压缩结果
+        verbose: true,
+        disable: false,
+        // 压缩阈值(单位:b)
+        threshold: 10240,
+        // 压缩方式
+        algorithm: 'gzip',
+        // 压缩包后缀名
+        ext: '.gz'
+      }),
+
+      // 各文件关系图谱(访问:http://localhost:3001/__inspect/)
+      Inspect()
     ],
     resolve: {
+      // 设置文件夹别名
       alias: {
         '@': resolve('src'),
         '#': resolve('types')
@@ -77,11 +101,13 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
     css: {
       preprocessorOptions: {
         scss: {
+          // 注入额外的自定义scss文件
           additionalData: `@import "./src/styles/var.scss";@import "./src/styles/mixin.scss";`
         }
       }
     },
     server: {
+      // host: '',
       port: 3001,
       open: false,
       proxy: {
@@ -94,6 +120,10 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       }
     },
     build: {
+      // 设置打包路径,默认dist
+      // outDir: '',
+      // 设置静态资源路径,默认assets
+      // assetsDir: '',
       // 搭配使用禁用console
       minify: 'terser',
       terserOptions: {
@@ -111,6 +141,16 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
       // 自定义打包路径
       // assetsDir: 'static/img/',
       rollupOptions: {
+        // 指定打包入口文件(单页面配置)
+        input: './index.html',
+        /*
+        // 多页面配置
+        input: {
+          page1: resolve('xxx1/index.html'),
+          page2: resolve('xxx2/index.html')
+        },
+         */
+
         output: {
           manualChunks: {
             vue: ['vue', 'vue-router', 'vuex']
