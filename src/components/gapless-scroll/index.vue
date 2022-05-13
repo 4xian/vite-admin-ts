@@ -375,9 +375,10 @@ const init = () => {
   if (autoPlay && unref(isScroll)) {
     if (unref(isGapless)) copyScrollHtml.value = unref(scrollContent)?.innerHTML
     startScroll()
-  } else if (!autoPlay && interval) {
+  }else cancelScroll()
+  /** else if (!autoPlay && interval) {
     if (unref(isGapless)) copyScrollHtml.value = unref(scrollContent)?.innerHTML
-  } else cancelScroll()
+  } else cancelScroll() */
 }
 
 /**
