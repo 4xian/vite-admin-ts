@@ -6,6 +6,7 @@ import { Response } from '#/request'
 import { UserInfo, LoginResult } from '@/api/models/user'
 import { flatArray } from '@/utils/util'
 import { menuTreeList } from '@/utils/auth'
+import { superAuth } from '@/utils/auth'
 interface UserState {
   userInfo: Partial<UserInfo>
   token?: string
@@ -56,7 +57,16 @@ export const useUserStore = defineStore({
     // 异步
     async login(params: { userName: string; password: string }): Promise<Response<LoginResult>> {
       try {
-        const userData = await loginApi(params)
+        const userData: Response<LoginResult> = {
+          code: 1,
+          message: '登录成功',
+          data: {
+            userName: 'super',
+            permission: superAuth,
+            token: new Date().getTime().toString(32)
+          }
+        }
+        // const userData = await loginApi(params)
         const { data } = userData
         if (data) {
           this.setToken(data.token)

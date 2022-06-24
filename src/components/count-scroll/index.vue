@@ -116,8 +116,6 @@ const handleAllStyle = (idx: string): CSSProperties => {
 const singleInit = () => {
   reset()
   singleHeight.value = unref(singleRef)?.offsetHeight || 0
-  console.log(unref(singleRef))
-
   timer.value = new Date().getTime()
   singleScroll()
 }
@@ -126,7 +124,6 @@ const singleInit = () => {
 const allInit = () => {
   reset()
   singleHeight.value = unref(allItemRef)?.offsetHeight || 0
-  console.log(unref(allItemRef))
   allScroll()
 }
 
@@ -192,10 +189,7 @@ const allScroll = () => {
 }
 
 onMounted(() => {
-  nextTick(() => {
-    console.log(singleRef.value)
-    console.log(allItemRef.value)
-  })
+  nextTick(() => {})
 })
 
 watch(

@@ -16,12 +16,12 @@ export interface LoginParams {
 }
 
 export interface LoginResult {
-  userId: string
-  avatar: string
-  name: string
-  id: string | number
+  userId?: string
+  avatar?: string
+  name?: string
+  id?: string | number
   userName: string
   token: string
-  roles: string[]
-  permission: string[]
+  roles?: string[]
+  permission: number[]
 }
