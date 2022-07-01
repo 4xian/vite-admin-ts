@@ -75,6 +75,26 @@ export const componentRouter = {
         icon: 'crop-img'
       },
       auth: '图片裁剪'
+    },
+    {
+      path: '/components/pdf-preview',
+      name: 'PdfPreview',
+      component: () => import('@/views/components/pdfPreview/index.vue'),
+      meta: {
+        title: 'pdf上浮图片拖拽',
+        icon: 'crop-img'
+      },
+      auth: '图片裁剪'
+    },
+    {
+      path: '/components/html-canvas',
+      name: 'HtmlCanvas',
+      component: () => import('@/views/components/html-canvas/index.vue'),
+      meta: {
+        title: 'HTML转canvas',
+        icon: 'image-preview'
+      },
+      auth: '图片裁剪'
     }
   ]
 }
